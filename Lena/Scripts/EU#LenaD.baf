@@ -1,0 +1,64 @@
+//////////////////////////////////////////
+//:.  dream (before sleep lovetalks)  .://
+//////////////////////////////////////////
+
+IF
+    InParty(Myself)
+    //: replaced RealGlobalTimerExpired("EU#LenaRomance","GLOBAL")
+    Global("EU#LenaRomanceTimer","LOCALS",1)
+    Global("EU#LenaRomanceActive","GLOBAL",1)
+    !AreaType(DUNGEON)
+    See(Player1)
+    !StateCheck("EU#Lena",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !See([ENEMY])
+    CombatCounter(0)
+    OR(3)
+        Global("EU#LenaLoveTalk","LOCALS",21) // Cooking
+        Global("EU#LenaLoveTalk","LOCALS",29) // Why Still Let Travel
+        Global("EU#LenaLoveTalk","LOCALS",23) // Drawing
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",2) //: to 2, increment/kill will handle this
+        IncrementGlobal("EU#LenaLoveTalk","LOCALS",1)
+        StartDialogueNoSet(Player1)
+END
+
+/////////////////////////////////////////////////////////////////////
+//:.  the "edge" dream lovetalk, sets romance to 2, checks LIKE  .://
+/////////////////////////////////////////////////////////////////////
+
+IF
+    InParty(Myself)
+    //: replaced RealGlobalTimerExpired("EU#LenaRomance","GLOBAL")
+    Global("EU#LenaRomanceTimer","LOCALS",1)
+    Global("EU#LenaRomanceActive","GLOBAL",1)
+    !AreaType(DUNGEON)
+    See(Player1)
+    !StateCheck("EU#Lena",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !See([ENEMY])
+    CombatCounter(0)
+    GlobalGT("EU#LenaLike","LOCALS",5) // greater/equal than 5 is enough from 19 (wrong!! need update) total possible
+    Global("EU#LenaLoveTalk","LOCALS",31) // Lena Accepts
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",2) //: to 2, increment/kill will handle this
+        IncrementGlobal("EU#LenaLoveTalk","LOCALS",1)
+        StartDialogueNoSet(Player1)
+END
+
+//: reverse of above, if like is low then set romance to 3 to enable others
+IF
+    InParty(Myself)
+    //: replaced RealGlobalTimerExpired("EU#LenaRomance","GLOBAL")
+    Global("EU#LenaRomanceTimer","LOCALS",1)
+    Global("EU#LenaRomanceActive","GLOBAL",1)
+    GlobalLT("EU#LenaLike","LOCALS",6) // lower than 6, from 19 (wrong!! need update) total possible
+    Global("EU#LenaLoveTalk","LOCALS",31) // Lena Accepts
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",2) //: to 2, increment/kill will handle this
+        SetGlobal("EU#LenaRomanceActive","GLOBAL",3)
+END
+

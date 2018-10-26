@@ -1,0 +1,121 @@
+//////////////////////////////////////////////////
+//:.  Lena spawn in Planar Sphere demon area  .://
+//////////////////////////////////////////////////
+
+IF
+    !Global("EU#LenaSpawn","AR0414",1)
+    !Global("EU#LenaMUSTSpawn","AR0414",1)
+	Global("ToldDemonsHeart","GLOBAL",1) // we know demon heart already, if not meaningless
+    OR(6) // only evil or neutral
+        Alignment(Player1, LAWFUL_EVIL)
+        Alignment(Player1, NEUTRAL_EVIL)
+        Alignment(Player1, CHAOTIC_EVIL)
+        Alignment(Player1, LAWFUL_NEUTRAL)
+        Alignment(Player1, NEUTRAL)
+        Alignment(Player1, CHAOTIC_NEUTRAL)
+    ReputationLT(Player1,18)
+    !InParty("Keldorn") // wont spawn if keldorn in party
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaMUSTSpawn","AR0414",1)
+        Continue()
+END
+
+//: level 9 Lena, only creature
+IF
+    Global("EU#LenaMUSTSpawn","AR0414",1)
+    !Global("EU#LenaSpawn","AR0414",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaSpawn","AR0414",1)
+        SetGlobal("EU#LenaSpokenOnce","GLOBAL",0)
+        CreateCreature("EU#Lena9",[3313.2400],3)
+END
+
+//: prevent re-spawn if conditions change
+IF
+    !Global("EU#LenaSpawn","AR0414",1)
+    OR(2)
+        !Global("ToldDemonsHeart","GLOBAL",1) // if dont know demon heart
+        InParty("Keldorn") // if keldorn in party
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaSpawn","AR0414",1)
+END
+
+//: remove Lena if Player got a demon heart already without her
+IF
+    !InParty("EU#LENA")
+    PartyHasItem("MISC6M")
+    !Global("EU#LenaGotDemonHeart","AR0414",2)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaJoined", "GLOBAL",2)
+        ActionOverride("EU#LENA", DestroySelf())
+END
+
+///////////////////////////////////////////
+//:.  Party got Demon Heart with Lena  .://
+///////////////////////////////////////////
+
+IF
+	InParty("EU#LENA")
+	!StateCheck("EU#LENA",CD_STATE_NOTVALID)
+	!StateCheck(Player1,CD_STATE_NOTVALID)
+	Global("ToldDemonsHeart","GLOBAL",1)
+	Global("EU#LenaGotDemonHeart","AR0414",0)
+    PartyHasItem("MISC6M")
+THEN
+	RESPONSE #1
+	    SetGlobal("EU#LenaGotDemonHeart","AR0414",1)
+        Wait(3)
+		ActionOverride("EU#LENA",StartDialogueNoSet(Player1))
+END
+
+///////////////////////////////////
+//:.  Lena Resurrection Demon  .://
+///////////////////////////////////
+
+//: spawn demon
+IF
+    Global("EU#LenaTurnedSuccubus","GLOBAL",7)
+    !Global("EU#LenaHeartDemonSpawn","AR0414",1) // check this instead of =0
+    // Dead("OBSDEM01") // do not check this
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaHeartDemonSpawn","AR0414",1)
+        CreateCreature("TELBAL1",[2788.921],2)
+		ActionOverride("TELBAL1",ChangeAIScript("EU#LEDMN",OVERRIDE))
+        ChangeEnemyAlly("TELBAL1",NEUTRAL)
+        GiveItemCreate("EU#LEDHR","TELBAL1",0,0,0)
+END
+
+//: player active, both got demon heart & Lena's body
+IF
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    RealGlobalTimerExpired("EU#LenaResurrect","GLOBAL")
+    Global("EU#LenaTurnedSuccubus","GLOBAL",8)
+    PartyHasItem("EU#G006")
+    PartyHasItem("EU#G007")
+    !See([EVILCUTOFF])
+THEN
+    RESPONSE #1
+        TakePartyItem("EU#G006")
+        TakePartyItem("EU#G007")
+        StartCutSceneMode()
+        StartCutScene("EU#LERES")
+        Continue()
+END
+
+///////////////////////////
+//:.  Lea'lyil Script  .://
+///////////////////////////
+
+IF
+    !Dead("OBSDEM01")
+    Global("LaelyilNotHostile","AR0414",0)
+THEN
+    RESPONSE #1
+        SetGlobal("LaelyilNotHostile","AR0414",1)
+        ChangeEnemyAlly("OBSDEM01",NEUTRAL)
+END

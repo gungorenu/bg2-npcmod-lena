@@ -1,0 +1,97 @@
+//: Tempest installer
+DEFINE_ACTION_MACRO ~Install_Tempest~ BEGIN
+    INCLUDE ~Lena/lib/fl#add_kit_ee.tpa~
+
+    //: add kit
+    ACTION_IF NOT FILE_EXISTS_IN_GAME EU#tst.2da THEN BEGIN
+        COPY ~Lena\Kit\LUeu#tst.2da~ ~override~
+
+        ADD_KIT ~EU#TEMPEST~
+        //: CLASWEAP.2DA all weapons
+        ~EU#TEMPEST 1 1 1 1 1 1 1 1~
+        //: WEAPPROF.2DA, proficiencies
+        ~EU#TEMPEST 0 5 2 0 5 5 5 5 5 5 5 5 0 5 5 5 5 5 0 0 5 5 0 2 2 2 2 2 0 0 2 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~
+        //: ABCLASRQ.2DA stat req, nothing special
+        ~EU#TEMPEST 0 15 0 0 0 0~
+        //: ABCLSMOD.2DA stat mods
+        ~EU#TEMPEST -2 0 0 0 0 0~
+        //: ABDCDSRQ.2DA dualclass req, same as fighter though NO dual class allowed
+        ~EU#TEMPEST 17 0 0 0 0 0~
+        //: ABDCSCRQ.2DA dualclass req, same as fighter though NO dual class allowed
+        ~EU#TEMPEST 15 0 0 0 0 0~
+        //: ALIGNMNT.2DA alignments, ALL
+        ~EU#TEMPEST 1 1 1 1 1 1 1 1 1~
+        //: DUALCLAS.2DA dualclass, NONE
+        ~EU#TEMPEST 0 0 0 0 0 0~
+        //: Abilities 2DA file
+        ~Lena\Kit\EU#tst.2DA~
+        //: KITTABLE.2DA and K_X_F.2DA files, it is only needed when to select for a player, we dont need it for Lena
+        ~K_F_H K_F_D K_F_G K_F_E K_F_HE K_F_HL K_F_HO~
+        //: KITLIST.2DA kit is fighter = 2, share same usability flag with "Stalkers"
+        ~0x00010000	2~
+        //: LUABBR.2DA HLAs
+        ~eu#tst~
+        //: 25STWEAP.2DA ToB starting equipment !!!TODO!!!
+        ~* * * * * * * * * * * * * * * * * * * *~
+        //: strings for lower, mixed and help descriptions
+        SAY @1
+        SAY @2
+        SAY @3
+
+        //: BGEE style kit
+        ACTION_IF GAME_IS ~BGEE BG2EE EET IWDEE~ THEN BEGIN
+            LAF fl#add_kit_ee
+                INT_VAR
+                    biography = RESOLVE_STR_REF (~~)
+                    briefdesc = RESOLVE_STR_REF (@7700)
+                    fallen = 0
+                    fallen_notice = RESOLVE_STR_REF (~~)
+                STR_VAR
+                    kit_name = ~EU#TEMPEST~
+                    clswpbon = ~1 0 3~
+                    numwslot = ~4~
+                    clascolr = ~35 67 67 25 80~
+                    hpclass  = ~HPWAR~
+                    clsrcreq = ~1 1 1 1 1 1 1~
+                    clasthac = ~0~
+            END
+        END
+
+        // add 15' rad, enemy projectile (could not find an exact one)
+        ADD_PROJECTILE ~Lena\Kit\EU#TST4P.pro~ ~override~
+
+        //: copy spells
+
+        // Cyclone & Cyclone winded
+        COPY ~Lena\Kit\eu#tst1.spl~ ~override~
+        SAY NAME1 @4
+        SAY NAME2 @4
+        COPY ~Lena\Kit\eu#tst1d.spl~ ~override~
+
+        // Thunderdash
+        COPY ~Lena\Kit\eu#tst2.spl~ ~override~
+        SAY NAME1 @5
+        SAY NAME2 @5
+
+        // bonus speed factor
+        COPY ~Lena\Kit\eu#tst3.spl~ ~override~
+
+        // Clairvoyance & Clairvoyance delayed
+        COPY ~Lena\Kit\eu#tst4.spl~ ~override~
+            WRITE_SHORT 0x0098 ~%EU#TST4P%~
+        COPY ~Lena\Kit\eu#tst4D.spl~ ~override~
+            WRITE_SHORT 0x0098 ~%EU#TST4P%~
+
+        // HLA, Breeze of Time
+        COPY ~Lena\Kit\eu#tst5.spl~ ~override~
+        SAY NAME1 @63
+        SAY NAME2 @63
+        SAY UNIDENTIFIED_DESC @64
+
+        // Waves of Exhaustion & Waves of Exhaustion delayed
+        COPY ~Lena\Kit\eu#tst6.spl~ ~override~
+        COPY ~Lena\Kit\eu#tst6D.spl~ ~override~
+        SAY 0x09E @65
+    END
+
+END

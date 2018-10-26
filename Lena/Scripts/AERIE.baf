@@ -1,0 +1,15 @@
+/////////////////////////////////////////////////
+//:.  Viconia Romantic, Lena Romance Killer  .://
+/////////////////////////////////////////////////
+
+IF
+    InParty(Myself)
+    Global("AerieRomanceActive","GLOBAL",2)
+    !Global("EU#LenaRomanceActive","GLOBAL",4)
+    OR(2)
+        Global("EU#LenaRomanceActive","GLOBAL",1)
+        Global("EU#LenaRomanceActive","GLOBAL",2)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceActive","GLOBAL",3)
+END

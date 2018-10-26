@@ -1,0 +1,73 @@
+//////////////////////////
+//:.  Ulressa Script  .://
+//////////////////////////
+
+IF
+    Global("EU#LenaUlressaGreet","LOCALS",0)
+    See(Player1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaUlressaGreet","LOCALS",1)
+        DisplayStringHead(Myself, @4622)
+        DialogInterrupt(FALSE)
+END
+
+//: ally self to bodhi at final bodhi fight
+IF
+    Global("C6BodhiFight","AR0809",1)
+    Allegiance(Myself,NEUTRAL)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaUlressaSpawnDemon","LOCALS",1)
+        Enemy()
+END
+
+//: death, leave body
+IF
+    Die()
+THEN
+    RESPONSE #1
+        DisplayStringHeadDead(Myself, @4623)
+        SetGlobal("EU#LenaTurnedSuccubus","GLOBAL",6)
+        DialogInterrupt(TRUE)
+        EraseJournalEntry(@4620)
+        AddJournalEntry(@4621,QUEST)
+        DropInventory()
+        DestroySelf()
+END
+
+//: domination of succubus
+IF
+    See([PC])
+    Delay(24)
+    Allegiance(Myself,ENEMY)
+THEN
+    RESPONSE #1
+        ReallyForceSpellDead([PC],VAMPIRE_DOMINATION)
+END
+
+IF
+    DifficultyGT(EASY)
+    Global("EU#LenaUlressaSpawnDemon","LOCALS",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaUlressaSpawnDemon","LOCALS",2)
+        CreateVisualEffect("SPSUMGTE",[1216.359])
+        CreateVisualEffect("SPSUMGTE",[1451.544])
+        Wait(1)
+        CreateCreature("TELPIT2",[1216.369],1)
+        CreateCreature("TELBAL2",[1451.554],3)
+END
+
+IF
+    DifficultyLT(NORMAL)
+    Global("EU#LenaUlressaSpawnDemon","LOCALS",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaUlressaSpawnDemon","LOCALS",2)
+        CreateVisualEffect("SPSUMGTE",[1216.359])
+        CreateVisualEffect("SPSUMGTE",[1451.544])
+        Wait(1)
+        CreateCreature("TELQUA1",[1216.369],1)
+        CreateCreature("TELQUA1",[1451.554],3)
+END

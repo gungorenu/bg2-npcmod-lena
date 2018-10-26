@@ -1,0 +1,21 @@
+//////////////////////////////////////
+//:.  Lena & Bodhi First Meeting  .://
+//////////////////////////////////////
+
+IF
+    True()
+THEN
+    RESPONSE #1
+        CutSceneId("EU#LENA")                           // Lena is acting in this block
+        SetGlobal("EU#LenaTurnedSuccubus","GLOBAL",1)   // Lena is now a succubus
+        Wait(1)                                         // wait 1sec
+        CreateVisualEffectObject("SPDISPMA",Myself)     // show some effect on Lena, released
+        DisplayStringHead(Myself, @4608 )               // Lena scream, suffer
+        Wait(4)                                         // wait for string display
+        CreateVisualEffectObject("SPNWCHRM",Myself)     // show some effect on Lena, charmed
+        DisplayStringHead(Myself, @4609 )               // CHARNAME, meet Lena's mother
+        Wait(4)                                         // wait for string display
+        EndCutSceneMode()                               // end cutscene
+        SetGlobal("EU#LenaTurnedSuccubus","GLOBAL",2)   // Lena is now a succubus
+        Continue()
+END

@@ -1,0 +1,121 @@
+///////////////////////////////////////////////////////////
+//:.  Lena Resurrecttion Quest - Sphere Demon Machine  .://
+///////////////////////////////////////////////////////////
+
+// reverted to AR0414 but still try
+IF
+    Clicked([0])
+    Range(Lasttrigger,20)
+    !PartyHasItem("MISCBP")                     // Bodhi's heart
+    PartyHasItem("EU#G007")                    // Lena's body
+    Global("EU#LenaTurnedSuccubus","GLOBAL",7)  // Ulressa dead, reverted to AR0414
+THEN
+    RESPONSE #1 
+        DisplayString(Myself, @4634)
+END
+
+// revert to AR0414
+IF
+    Clicked([0])
+    Range(Lasttrigger,20)
+    PartyHasItem("MISCBP")                      // Bodhi's heart
+    PartyHasItem("EU#G007")                    // Lena's body
+    Global("EU#LenaTurnedSuccubus","GLOBAL",6)  // Ulressa dead
+THEN
+    RESPONSE #100
+        StartCutSceneMode()
+        CreateVisualEffect("AMCALL",[843.725])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[753.739])
+        PlaySound("EFF_P12")
+        DisplayString(Myself, @4624)
+        CreateVisualEffect("AMCALL",[743.687])
+        PlaySound("EFF_P12")
+
+        TakePartyItem("MISCBP")                     // take this
+        Wait(4)
+        CreateVisualEffect("ICMAGICH",[1111.611])
+        CreateVisualEffect("ICMAGICH",[1094.731])
+        CreateVisualEffect("ICMAGICH",[840.864])
+        CreateVisualEffect("AMCALL",[776.623])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[743.687])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[876.677])
+        PlaySound("EFF_P12")
+        Wait(1)
+        CreateVisualEffect("AMCALL",[843.725])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[753.739])
+        PlaySound("EFF_P12")
+        Wait(1)
+        CreateVisualEffect("AMCALL",[979.674])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[924.594])
+        PlaySound("EFF_P12")
+        Wait(1)
+        Wait(2)
+        FadeToColor([20.0],0)
+        Wait(3)
+        FadeFromColor([20.0],0)
+        ScreenShake([10.10],10)
+        DisplayString(Myself, @4625)
+        SoundActivate("0413b-OFF",FALSE)
+        SoundActivate("MainAmbient",FALSE)
+        SoundActivate("0413a-ON",TRUE)
+
+        SetGlobal("EU#LenaTurnedSuccubus","GLOBAL",7)  // AR0414 activated
+        EndCutSceneMode()
+END
+
+// revert to Slums
+IF
+    Clicked([0])
+    Range(Lasttrigger,20)
+    Global("EU#LenaTurnedSuccubus","GLOBAL",12)  // Lena resurrected
+THEN
+    RESPONSE #100
+        StartCutSceneMode()
+        CreateVisualEffect("AMCALL",[843.725])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[753.739])
+        PlaySound("EFF_P12")
+        DisplayString(Myself, @4627)
+        CreateVisualEffect("AMCALL",[743.687])
+        PlaySound("EFF_P12")
+
+        Wait(4)
+        CreateVisualEffect("ICMAGICH",[1111.611])
+        CreateVisualEffect("ICMAGICH",[1094.731])
+        CreateVisualEffect("ICMAGICH",[840.864])
+        CreateVisualEffect("AMCALL",[776.623])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[743.687])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[876.677])
+        PlaySound("EFF_P12")
+        Wait(1)
+        CreateVisualEffect("AMCALL",[843.725])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[753.739])
+        PlaySound("EFF_P12")
+        Wait(1)
+        CreateVisualEffect("AMCALL",[979.674])
+        PlaySound("EFF_P12")
+        CreateVisualEffect("AMCALL",[924.594])
+        PlaySound("EFF_P12")
+        Wait(1)
+        Wait(2)
+        FadeToColor([20.0],0)
+        Wait(3)
+        FadeFromColor([20.0],0)
+        ScreenShake([10.10],10)
+        DisplayString(Myself, @4628)
+        SoundActivate("0413b-OFF",FALSE)
+        SoundActivate("MainAmbient",FALSE)
+        SoundActivate("0413a-ON",TRUE)
+
+        SetGlobal("EU#LenaTurnedSuccubus","GLOBAL",20)  // Slums activated, Lena turned normal
+        EndCutSceneMode()
+END
+

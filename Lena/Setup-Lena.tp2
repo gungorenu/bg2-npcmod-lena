@@ -1,0 +1,452 @@
+////////////////////////////////////////////
+//:.  Lena the Tempest NPC Romance Mod  .://
+////////////////////////////////////////////
+
+BACKUP ~Lena/backup~
+AUTHOR ~eugene, 'gungorenu@gmail.com'~
+VERSION ~v0.8~
+
+//: lets put a language
+LANGUAGE ~English~
+         ~english~
+         ~Lena/Tra/eng.tra~
+
+//: Abyssal language translator: http://www.tilansia.com/langconvert.php
+//: See TRA file for translation (it will be next item)
+
+//:. BEGIN COMPONENT  .://///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+BEGIN @0
+//: First Component
+DESIGNATED 1
+PRINT ~Version: 0.8~
+
+INCLUDE ~Lena/lib/tempest.tpa~
+
+//: not valid state, copied from another mod
+APPEND ~STATE.IDS~ ~0x80101FEF CD_STATE_NOTVALID~
+UNLESS ~CD_STATE_NOTVALID~
+
+//: EET related stuff 
+ACTION_IF (GAME_IS ~eet~) BEGIN
+  OUTER_SET bg2_chapter = 12
+END ELSE BEGIN
+  OUTER_SET bg2_chapter = 0
+END
+OUTER_FOR (i=1; i<=10; i=i+1) BEGIN
+  OUTER_SET bg2_chapter = bg2_chapter + 1
+  OUTER_SPRINT name_source ~bg2_chapter_%i%~
+  OUTER_SET EVAL ~%name_source%~ = bg2_chapter
+END
+
+///////////////////////
+//:.  TEMPEST KIT  .://
+///////////////////////
+
+OUTER_SET "EU#TEMPEST" = 0
+ACTION_IF FILE_EXISTS_IN_GAME EU#tst.2da THEN BEGIN
+    COPY_EXISTING ~kitlist.2da~ ~override\dummy.2da~
+        COUNT_2DA_ROWS 9 rows
+        FOR (row = 0 ; row < rows ; ++row) BEGIN
+            READ_2DA_ENTRY row 0 9 kitno
+            READ_2DA_ENTRY row 1 9 kitname
+            PATCH_IF (("%kitname%" STRING_COMPARE_CASE "EU#TEMPEST")=0) BEGIN
+                SET "EU#TEMPEST" = ~%kitno%~
+            END
+        END
+    BUT_ONLY_IF_IT_CHANGES
+END
+
+LAUNCH_ACTION_MACRO ~Install_Tempest~
+
+//////////////////////////
+//:.  Lena Character  .://
+//////////////////////////
+
+// !!!TODO!!! sound ref example
+//:  SAY MORALE ~Mommy!~ [Snd001]
+
+//: copy "Lena" characters
+COPY ~Lena\Characters\eu#lena9.cre~ ~override~
+SAY NAME1 @56
+SAY NAME2 @56
+SAY BIO @11
+  SAY MORALE @12
+  SAY HAPPY @13
+  SAY UNHAPPY_ANNOYED @14
+  SAY UNHAPPY_SERIOUS @15
+  SAY UNHAPPY_BREAKING @16
+  SAY LEADER @17
+  SAY TIRED @18
+  SAY BORED @19
+  SAY BATTLE_CRY1 @20
+  SAY BATTLE_CRY2 @21
+  SAY BATTLE_CRY3 @22
+  SAY BATTLE_CRY4 @23
+  SAY BATTLE_CRY5 @24
+  SAY DAMAGE @25
+  SAY DYING @26
+  SAY HURT @27
+  SAY AREA_FOREST @28
+  SAY AREA_CITY @29
+  SAY AREA_DUNGEON @30
+  SAY AREA_DAY @31
+  SAY AREA_NIGHT @32
+  SAY SELECT_COMMON1 @33
+  SAY SELECT_COMMON2 @34
+  SAY SELECT_COMMON3 @35
+  SAY SELECT_COMMON4 @36
+  SAY SELECT_COMMON5 @37
+  SAY SELECT_COMMON6 @38
+  SAY SELECT_ACTION1 @39
+  SAY SELECT_ACTION2 @40
+  SAY SELECT_ACTION3 @41
+  SAY SELECT_ACTION4 @42
+  SAY SELECT_ACTION5 @43
+  SAY SELECT_ACTION6 @44
+  SAY SELECT_ACTION7 @45
+  SAY SELECT_RARE1 @47
+  SAY SELECT_RARE2 @48
+  SAY CRITICAL_HIT @49
+  SAY CRITICAL_MISS @50
+  SAY TARGET_IMMUNE @51
+  SAY INVENTORY_FULL @52
+  SAY SPELL_DISRUPTED @53
+  WRITE_SHORT 0x0246 0x4000 | ~%EU#TEMPEST%~
+  WRITE_SHORT 0x0244 0
+
+//: succubus lena, ulressa
+COPY ~Lena\Characters\eu#lenaV.cre~ ~override~
+SAY NAME1 @57
+SAY NAME2 @57
+SAY SELECT_COMMON1 @4622
+SAY SELECT_COMMON2 @4622
+SAY SELECT_COMMON3 @4622
+SAY SELECT_COMMON4 @4622
+SAY SELECT_COMMON5 @4622
+SAY SELECT_COMMON6 @4622
+SAY SELECT_RARE1 @4622
+SAY SELECT_RARE2 @4622
+  WRITE_SHORT 0x0246 0x4000 | ~%EU#TEMPEST%~
+  WRITE_SHORT 0x0244 0
+
+//: dialogs
+APPEND ~pdialog.2da~
+~EU#LENA eu#LenaP eu#LenaJ eu#LenaD~
+UNLESS ~EU#LENA~
+UNLESS ~25POST~
+
+APPEND ~interdia.2da~
+~EU#LENA Beu#Lena~
+UNLESS ~EU#LENA~
+UNLESS ~25FILE~
+
+/////////////////////////
+//:.  Early Dialogs  .://
+/////////////////////////
+
+COMPILE ~Lena/Dialogue/EU#LENA.d~
+    ~Lena/Dialogue/BEU#LENA.d~
+    ~Lena/Dialogue/EU#LENAP.d~
+    ~Lena/Dialogue/EU#LENAI.d~
+    ~Lena/Dialogue/EU#LENAL.d~
+    ~Lena/Dialogue/EU#LENAJ.d~
+
+/////////////////////////////////
+//:.  Lena's (Custom) Items  .://
+/////////////////////////////////
+
+//: special effect files for items
+COPY ~Lena\Items\eu#DD6.eff~ ~override~
+COPY ~Lena\Items\eu#DDA.eff~ ~override~
+COPY ~Lena\Items\eu#DH3.eff~ ~override~
+COPY ~Lena\Items\eu#DH5.eff~ ~override~
+
+ACTION_IF GAME_IS ~BGEE BG2EE EET~ THEN BEGIN
+  COPY ~Lena\Items\eu#TDD6.eff~ ~override~
+  COPY ~Lena\Items\eu#TDDA.eff~ ~override~
+  COPY ~Lena\Items\eu#TDH3.eff~ ~override~
+  COPY ~Lena\Items\eu#TDH5.eff~ ~override~
+  COPY ~Lena\Items\eu#TCRIT.spl~ ~override~
+  COPY ~Lena\Items\eu#DVORP.spl~ ~override~
+END
+
+//: BAMs
+COPY ~Lena\BAM\eu#learm.bam~ ~override~
+COPY ~Lena\BAM\eu#lewpn.bam~ ~override~
+
+//: Skin of Larchen
+COPY ~Lena\Items\eu#g003.itm~ ~override~
+SAY NAME1 @7
+SAY NAME2 @7
+SAY DESC @8
+
+//: Skin of Larchen (TOB)
+COPY ~Lena\Items\eu#g004.itm~ ~override~
+SAY NAME1 @7
+SAY NAME2 @7
+SAY DESC @4000
+
+ACTION_IF GAME_IS ~BGEE BG2EE EET~ THEN BEGIN
+  //: Bane of Tanar'ri
+  COPY ~Lena\Items\eu#g001.itm~ ~override~
+  SAY NAME1 @9
+  SAY NAME2 @9
+  SAY DESC @10
+
+  //: Bane of Tanar'ri (TOB)
+  COPY ~Lena\Items\eu#g002.itm~ ~override~
+  SAY NAME1 @9
+  SAY NAME2 @9
+  SAY DESC @4001
+END ELSE BEGIN
+  //: Bane of Tanar'ri
+  COPY ~Lena\Items\eu#g001V.itm~ ~override\eu#g001.itm~
+  SAY NAME1 @9
+  SAY NAME2 @9
+  SAY DESC @66
+
+  //: Bane of Tanar'ri (TOB)
+  COPY ~Lena\Items\eu#g002V.itm~ ~override\eu#g002.itm~
+  SAY NAME1 @9
+  SAY NAME2 @9
+  SAY DESC @4021
+END
+
+//: Lena's body
+COPY ~Lena\Items\eu#g007.itm~ ~override~
+SAY NAME1 @4600
+SAY NAME2 @4600
+SAY DESC  @4601
+
+//: Demon Heart
+COPY ~Lena\Items\eu#g006.itm~ ~override~
+SAY NAME1 @4629
+SAY NAME2 @4629
+SAY DESC  @4630
+
+//: set armor of Lena not usable with protection items
+COPY_EXISTING ~itemexcl.2da~ ~override~
+    COUNT_2DA_ROWS 1 "itemexcl_rowcount"
+    INSERT_2DA_ROW "itemexcl_rowcount" 1 ~EU#G004 1~
+    INSERT_2DA_ROW "itemexcl_rowcount" 1 ~EU#G003 1~
+
+////////////////////////////
+//:.  Portraits/Images  .://
+////////////////////////////
+
+ACTION_IF GAME_IS ~BGEE BG2EE EET~ THEN BEGIN
+    COPY ~Lena\Portraits\EU#LENAL_EE.bmp~ ~override\EU#LENAL.bmp~
+    COPY ~Lena\Portraits\EU#LENAL_EE.bmp~ ~override\EU#LENAM.bmp~
+    COPY ~Lena\Portraits\EU#LENAL_EE.bmp~ ~override\EU#LENAS.bmp~
+END ELSE BEGIN
+    COPY ~Lena\Portraits\EU#LENAL.bmp~ ~override\EU#LENAL.bmp~
+    COPY ~Lena\Portraits\EU#LENAM.bmp~ ~override\EU#LENAM.bmp~
+    COPY ~Lena\Portraits\EU#LENAS.bmp~ ~override\EU#LENAS.bmp~
+END
+
+/////////////////////////////////
+//:.  Scripts (Non Dialogs)  .://
+/////////////////////////////////
+
+//: lena script
+COMPILE ~Lena\Scripts\EU#Lena.baf~
+    ~Lena\Scripts\EU#LenaD.baf~
+
+//: lena romance match & spawn
+EXTEND_TOP ~Baldur.bcs~ ~Lena/Scripts/Player.baf~
+
+//: areas
+EXTEND_TOP ~ar0414.bcs~ ~Lena/Scripts/AR0414.baf~
+EXTEND_TOP ~ar0411.bcs~ ~Lena/Scripts/AR0411.baf~
+EXTEND_TOP ~ar0400.bcs~ ~Lena/Scripts/AR0400.baf~
+EXTEND_TOP ~ar2000.bcs~ ~Lena/Scripts/AR2000.baf~
+
+//: vanilla npc romances
+EXTEND_TOP ~aerie.bcs~ ~Lena/Scripts/AERIE.baf~
+EXTEND_TOP ~jaheira.bcs~ ~Lena/Scripts/JAHEIRA.baf~
+EXTEND_TOP ~viconia.bcs~ ~Lena/Scripts/VICONIA.baf~
+
+//: bodhi abduction
+COMPILE ~Lena\Scripts\EU#LEBV1.baf~
+COMPILE ~Lena\Scripts\EU#LEBV2.baf~
+COMPILE ~Lena\Scripts\EU#LEBV3.baf~
+EXTEND_TOP ~bodhiamb.bcs~ ~Lena/Scripts/BODHIAMB.baf~
+EXTEND_TOP ~AR0809.bcs~ ~Lena/Scripts/AR0809.baf~
+COMPILE ~Lena\Scripts\EU#LEVMP.baf~
+EXTEND_TOP ~POWEROBS.bcs~ ~Lena/Scripts/POWEROBS.baf~
+COMPILE ~Lena\Scripts\EU#LEDMN.baf~
+COMPILE ~Lena\Scripts\EU#LERES.baf~
+
+//: spell in cutscene/dialogue
+COPY ~Lena\Scripts\eu#uddmn.spl~ ~override~
+
+//: some script additions
+EXTEND_TOP ~SHADRA01.bcs~ ~Lena\Scripts\SHADRA01.baf~
+EXTEND_TOP ~OBSDEM01.bcs~ ~Lena\Scripts\OBSDEM01.baf~
+
+//: if Lena is enemy then this spell is used, highest level of Cyclone with Clairvoyance and Waves of Exhaustion activated regardless of level
+COPY ~Lena\Kit\eu#tstE.spl~ ~override~
+
+//: ADD_JOURNAL for EE
+ACTION_IF GAME_IS ~BG2EE EET~ THEN BEGIN
+    ADD_JOURNAL EXISTING @4620 @4621
+END
+
+////////////////////
+//:.  Lena TOB  ..//
+////////////////////
+
+//: check if TOB installed
+ACTION_IF FILE_EXISTS_IN_GAME ~mel01.cre~ THEN BEGIN
+
+    APPEND ~pdialog.2da~
+    ~EU#LENA eu#LenaP eu#LenaJ eu#LenaD eu#LenaP eu#LenaJ eu#LenaD eu#Lena~
+    UNLESS ~EU#LENA~
+    IF ~25POST~
+
+    APPEND ~interdia.2da~
+    ~EU#LENA Beu#Lena Beu#Lena~
+    UNLESS ~EU#LENA~
+    IF ~25FILE~
+
+    //: dialogues
+    COMPILE ~Lena/Dialogue/EU#LEFFT.d~
+        ~Lena/Dialogue/BEU#LE25.d~
+        ~Lena/Dialogue/EU#LENAX.d~
+
+    //: cespenar for upgraded items
+    EXTEND_TOP ~BOTSMITH.bcs~ ~Lena/Scripts/BOTSMITH.baf~
+
+    //: Fifth (as item)
+    COPY ~Lena\Items\eu#g005.itm~ ~override~
+    SAY NAME1 @58
+    SAY NAME2 @58
+    SAY DESC @59
+
+    //: Fifth (as character)
+    COPY ~Lena\Characters\eu#lefft.cre~ ~override~
+    SAY NAME1 @58
+    SAY NAME2 @58
+
+    //: Fifth (as spell)
+    COPY ~Lena\Scripts\eu#lefft.spl~ ~override~
+
+    //: Fifth (as script)
+    COMPILE ~Lena\Scripts\EU#LEFFT.baf~
+
+    //: Lovetalk related NPC script extensions
+    EXTEND_TOP ~BALTH.bcs~ ~Lena/Scripts/BALTH.baf~
+    EXTEND_TOP ~SENDAI.bcs~ ~Lena/Scripts/SENDAI.baf~
+    EXTEND_TOP ~ABAZIGAL.bcs~ ~Lena/Scripts/ABAZIGAL.baf~
+    EXTEND_TOP ~YAGA01.bcs~ ~Lena/Scripts/YAGA01.baf~
+
+    //: 6 TOB epilogues
+    COPY ~Lena/Scripts/EU#LEND.2da~ ~override/EU#LEND1.2da~
+        REPLACE 7324 @6000
+    COPY ~Lena/Scripts/EU#LEND.2da~ ~override/EU#LEND2.2da~
+        REPLACE 7324 @6001
+    COPY ~Lena/Scripts/EU#LEND.2da~ ~override/EU#LEND3.2da~
+        REPLACE 7324 @6002
+    COPY ~Lena/Scripts/EU#LEND.2da~ ~override/EU#LEND4.2da~
+        REPLACE 7324 @6003
+    COPY ~Lena/Scripts/EU#LEND.2da~ ~override/EU#LEND5.2da~
+        REPLACE 7324 @6004
+    COPY ~Lena/Scripts/EU#LEND.2da~ ~override/EU#LEND6.2da~
+        REPLACE 7324 @6005
+
+    EXTEND_TOP ~ar6200.bcs~ ~Lena\Scripts\AR6200.baf~
+
+    //: Wraith specific stuff
+    COPY ~Lena\Characters\eu#leVLN.cre~ ~override~
+        SAY NAME1 @60
+        SAY NAME2 @60
+    COPY ~Lena\Items\eu#g008.itm~ ~override~ // valen armor that will look good on him:)
+
+    ACTION_IF GAME_IS BG2EE THEN BEGIN
+        COPY ~Lena\Portraits\eu#leVLM.bmp~ ~override~ // valen portrait M
+        COPY ~Lena\Portraits\eu#leVLS_EE.bmp~ ~override\eu#leVLS.bmp~ // valen portrait S
+    END ELSE BEGIN
+        COPY ~Lena\Portraits\eu#leVLM.bmp~ ~override~ // valen portrait M
+        COPY ~Lena\Portraits\eu#leVLS.bmp~ ~override~ // valen portrait S
+    END
+    EXTEND_BOTTOM ~CUT218G.bcs~ ~Lena/Scripts/CUT218G.baf~
+    COMPILE ~EU#LEVLN.bcs~ ~Lena/Scripts/EU#LEVLN.baf~ // valen summon cutscene
+    COMPILE ~Lena/Dialogue/EU#LEVLN.d~
+
+END
+
+//////////////////////////////////
+//:.  Area Modifying Scripts  .://
+//////////////////////////////////
+
+//: AR2402, demogorgon statue
+COPY_EXISTING ~AR2402.ARE~ ~override~
+LPF fj_are_structure
+    INT_VAR
+    fj_type         = 0
+    fj_box_left     = 2874
+    fj_box_top      = 1246
+    fj_box_right    = 3297
+    fj_box_bottom   = 1406
+    fj_cursor_idx   = 0
+    fj_vertex_0     = 2874 + (1340 << 16)
+    fj_vertex_1     = 2902 + (1406 << 16)
+    fj_vertex_2     = 3297 + (1315 << 16)
+    fj_vertex_3     = 3253 + (1246 << 16)
+    fj_loc_x        = 3025
+    fj_loc_y        = 1198
+    STR_VAR
+    fj_structure_type   = region
+    fj_name             = eu#lena1
+    fj_reg_script       = eu#lear1
+  END
+
+//: AR2402, demogorgon sacrifice
+COPY_EXISTING ~AR2402.ARE~ ~override~
+LPF fj_are_structure
+    INT_VAR
+    fj_type         = 0
+    fj_box_left     = 2881
+    fj_box_top      = 1128
+    fj_box_right    = 3006
+    fj_box_bottom   = 1247
+    fj_cursor_idx   = 0
+    fj_vertex_0     = 2882 + (1164 << 16)
+    fj_vertex_1     = 2881 + (1247 << 16)
+    fj_vertex_2     = 2915 + (1247 << 16)
+    fj_vertex_3     = 2967 + (1234 << 16)
+    fj_vertex_4     = 3005 + (1211 << 16)
+    fj_vertex_5     = 3006 + (1190 << 16)
+    fj_vertex_6     = 2989 + (1176 << 16)
+    fj_vertex_7     = 2989 + (1167 << 16)
+    fj_vertex_8     = 2974 + (1131 << 16)
+    fj_vertex_9     = 2931 + (1128 << 16)
+    fj_loc_x        = 2964
+    fj_loc_y        = 1364
+    STR_VAR
+    fj_structure_type   = region
+    fj_name             = eu#lena2
+    fj_reg_script       = eu#lear2
+  END
+
+COMPILE ~Lena/Scripts/EU#LEAR1.baf~
+COMPILE ~Lena/Scripts/EU#LEAR2.baf~
+
+//:. END COMPONENT  .://///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//:. BEGIN COMPONENT  .://///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////
+//:.  Standalone Tempest Kit Install  .://
+//////////////////////////////////////////
+
+BEGIN @61
+//: Second Component
+DESIGNATED 2
+FORBID_COMPONENT ~setup-lena.tp2~ 1 @62 //: only can be installed if Lena NPC is not installed, for people who want to have Tempest kit but not Lena
+
+INCLUDE ~Lena/lib/tempest.tpa~
+
+LAUNCH_ACTION_MACRO ~Install_Tempest~
+

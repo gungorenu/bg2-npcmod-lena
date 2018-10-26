@@ -1,0 +1,15 @@
+//////////////////////////////////////////////////////
+//:.  if Lena in party then Evil Khellon appears  .://
+//////////////////////////////////////////////////////
+
+IF
+	InParty("EU#LENA")
+	!StateCheck("EU#LENA",CD_STATE_NOTVALID)
+	!StateCheck(Player1,CD_STATE_NOTVALID)
+    Global("loganjob1","GLOBAL",1) // logan gave first quest
+    Global("trevil01Spawn","GLOBAL",0) // khellon not spawn
+THEN
+	RESPONSE #1
+        SetGlobal("trevil01Spawn","GLOBAL",1)
+        CreateCreature("TREVIL01",[1087.2524],8)
+END

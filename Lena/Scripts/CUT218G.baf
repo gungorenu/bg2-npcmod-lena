@@ -1,0 +1,13 @@
+//////////////////////////////////////////////////
+//:.  Master Wraith Final Transform Cutscene  .://
+//////////////////////////////////////////////////
+
+IF
+    True()
+THEN
+    RESPONSE #1
+        CutSceneId("EU#LEVLN") // actor is Valen
+        CreateVisualEffectObject("SPFLESHS",Myself)
+        Wait(1)
+        ChangeAnimation("HGWRA02") // SURPRISE
+END

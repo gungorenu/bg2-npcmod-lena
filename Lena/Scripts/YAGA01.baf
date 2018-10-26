@@ -1,0 +1,12 @@
+////////////////////////////////////////////////////
+//:.  Yaga Shura Script, Trigger sth when Dead  .://
+////////////////////////////////////////////////////
+
+IF
+    Die()
+    !Global("EU#YagaShuraDead","GLOBAL",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#YagaShuraDead","GLOBAL",1)
+        Continue()
+END

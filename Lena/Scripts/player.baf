@@ -1,0 +1,60 @@
+/////////////////////////////
+//:.  Lena Resurrection  .://
+/////////////////////////////
+
+IF
+    Global("EU#LenaTurnedSuccubus","GLOBAL",7)
+    PartyHasItem("EU#G006")
+    PartyHasItem("EU#G007")
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTurnedSuccubus","GLOBAL",8)
+        RealSetGlobalTimer("EU#LenaResurrect","GLOBAL",2)  // set resurrect timer 2sec
+END
+
+//////////////////////////////////////////////////////////
+//:.  Party "Party" Lovetalk, requires another check  .://
+//////////////////////////////////////////////////////////
+
+IF
+    InParty("EU#Lena")
+    PartyRested()
+    OR(12)
+        AreaCheck("AR0021") // crooked crane, city gates, lvl1, not likely to happen because Lena refuses to stay
+        AreaCheck("AR0406") // copper coronet, lvl2
+        AreaCheck("AR0704") // mithrest, waukens prom, lvl4
+        AreaCheck("AR0709") // den of seven vales, lvl3
+        AreaCheck("AR0313") // sea bounty tavern, lvl4
+        AreaCheck("AR0509") // five flagons, lvl4
+        AreaCheck("AR0513") // delosar, bridge, lvl4
+        AreaCheck("AR1602") // vulgar monkey, lvl2
+        AreaCheck("AR1105") // umar inn, lvl3
+        AreaCheck("AR2010") // vyatri pub, trademeet, lvl3
+        AreaCheck("AR5003") // saradush tavern, lvl3
+        AreaCheck("AR5501") // amkethran inn, lvl3
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRestedInInn","GLOBAL",1)
+        Continue()
+END
+
+IF
+    InParty("EU#Lena")
+    PartyRested()
+    !AreaCheck("AR0021") // crooked crane, city gates, lvl1, not likely to happen because Lena refuses to stay
+    !AreaCheck("AR0406") // copper coronet, lvl2
+    !AreaCheck("AR0704") // mithrest, waukens prom, lvl4
+    !AreaCheck("AR0709") // den of seven vales, lvl3
+    !AreaCheck("AR0313") // sea bounty tavern, lvl4
+    !AreaCheck("AR0509") // five flagons, lvl4
+    !AreaCheck("AR0513") // delosar, bridge, lvl4
+    !AreaCheck("AR1602") // vulgar monkey, lvl2
+    !AreaCheck("AR1105") // umar inn, lvl3
+    !AreaCheck("AR2010") // vyatri pub, trademeet, lvl3
+    !AreaCheck("AR5003") // saradush tavern, lvl3
+    !AreaCheck("AR5501") // amkethran inn, lvl3
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRestedInInn","GLOBAL",0)
+        Continue()
+END

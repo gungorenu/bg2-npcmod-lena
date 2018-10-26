@@ -1,0 +1,14 @@
+//////////////////////////////////////////
+//:.  Valen (Wraith) Summon Cutscene  .://
+//////////////////////////////////////////
+
+IF
+    True()
+THEN
+    RESPONSE #1
+        CutSceneId(Player1)
+        CreateVisualEffect("SPFLESHS",[1454.1398]) // show some fireworks
+        Wait(1)
+        CreateCreature("EU#LEVLN",[1454.1398],14)  // summon Valen
+        ActionOverride("EU#LEVLN",StartDialogueNoSet(Player1)) // force talk
+END

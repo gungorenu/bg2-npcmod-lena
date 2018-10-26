@@ -1,0 +1,17 @@
+//////////////////////////////////////////////////
+//:.  Shadow Dragon, Thaxll'ssillyia awakens  .://
+//////////////////////////////////////////////////
+
+IF
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Dead("SHADEL") // only if quest is done
+    OR(2)
+        HasItemEquiped("EU#G003","EU#LENA")
+        HasItemEquiped("EU#G004","EU#LENA")
+    NumTimesTalkedTo(0)
+    See("EU#LENA")
+THEN
+    RESPONSE #100
+        StartDialogNoSet([PC])
+END

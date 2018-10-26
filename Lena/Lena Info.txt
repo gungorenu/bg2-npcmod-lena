@@ -1,0 +1,528 @@
+        ////////////////////////////////////////////////////////////
+        //:.  Lena NPC Mod for Baldur's Gate 2: Shadows of Amn  .://
+        ////////////////////////////////////////////////////////////
+
+Welcome and thank you for downloading and playing this mod.
+Lena is a warrior tiefling who can join protagonist's cause and help for his/her problems. 
+
+Stats: 16 19 9 14 11 16 (total 85), Tiefling but looks like human, Fighter with "Tempest" kit, focuses on Bastard Sword, Crossbow, 
+Flail and Single Weapon Fighting Style.
+Racial Traits: %50 Cold & Cold Damage resistance
+
+
+
+
+        ////////////////////
+        //:.  Foreword  .://
+        ////////////////////
+
+Modder & Writer & Tester is me "eugene", send email to gungorenu@gmail.com for anything related with this mod when you feel the need. 
+This is my first mod, both first writing & scripting. There might be many mistakes, if you find any send them to me, I will try to fix 
+them quickly.
+
+My natural tongue is not english so I had to use dictionaries many times. Some of the texts might not look correct, sorry, they are 
+translation bugs. If you can provide the correct words I can fix them. Again, I wanted to add many other responses and lines but due to 
+translation issues, I gave up. This affected the writing quality of mod. It is too amateurish to be honest... 
+
+Some of the lines contain a few "bad" words. If they will be disturbing you, delete this mod and don't install it.
+
+The mod is tested by me by playing a few times with different characters but due to some party member availability, I did not test with 
+all NPCs. There is no special condition with others so it should not be a problem.
+
+I wanted to test myself if I can write a (good & enjoyable) mod or not, nearly all of the warriors out there are good aligned and does 
+not fit in an evil party. The only thing I cared when writing the mod was my own pleasure & fun. In other words, this mod is my personal 
+amusement, nothing else. As I wrote above actual reason for this mod is I WANT EVIL FIGHTERS!!! 
+
+
+
+
+        ////////////////////////////////////////
+        //:.  Installation & Compatibility  .://
+        ////////////////////////////////////////
+
+This is a Weidu mod, installation is simple. Extract everything from compressed file to Baldur's Gate 2 game folder and run "Setup-Lena.exe" 
+executable. It has 2 components. Re-Installing or uninstalling should have no issues.
+  
+  * Lena NPC Mod: will install both Tempest Kit and Lena NPC. If you only want Tempest kit, there is a standalone component for this, do not 
+install this component and Tempest kit component will be available.
+
+  * Tempest Kit Component: will install Tempest kit without installing Lena NPC.
+
+As a Weidu mod, it should be compatible with other Weidu mods. This mod does not alter any critical game mechanic or storyline except a few 
+minor cases where there are conditions to meet. 
+
+This mod will install a new fighter kit, so an available kit slot is required for the installation to succeed. If installed other mods fill up 
+all fighter kit slots, setup will fail.
+
+Requires TOB even SOA, sorry.
+
+I did not test if it requires a new game but as always it is recommended.
+
+
+
+
+        ////////////////////////////
+        //:.  SoA Mod Contents  .://
+        ////////////////////////////
+
+  * A single class warrior tiefling with a new cheesy kit, Tempest
+
+  * Evil aligned warrior available ONLY FOR Neutral or Evil aligned protagonist. She won't be around if <CHARNAME> is Good aligned or some another 
+condition. See NPC objection below.
+
+  * Romancable by any race (she is not racist) although some love talks might look awkward if <CHARNAME> race is ...small. 
+
+  * Only romancable by MALE, Charisma >= 13 (greater or equal) and Intelligence >= 11, as I said, no race limitation but for Neutral or Evil aligned 
+protagonist only.
+
+  * Romance depends on a LIKE system, if <CHARNAME> fails to "appeal" to Lena then romance won't go to serious stage.
+
+  * Custom Items (weapon and armor only) which are usable by herself only (or by some fallen rangers). Some lovetalks assume she is equipped with her 
+custom gear. 
+
+  * Banters for all Bioware NPCs (2 times each) and interjections throughout SoA...
+
+  * Player initiated flirts and something else...
+
+  * Leaves party for good if kicked out, sorry, she won't waste time around.
+
+  * Can be acquired during Mage Stronghold quest.
+
+  * Strongly objects to Keldorn, does not fight but leave party directly, also won't show up if he is in party.
+
+  * Detailed (includes spoilers) contents are at the bottom of this document.
+
+  * Focuses towards bastard sword grand mastery on higher levels if recruit in game advanced
+
+
+
+
+        //////////////////////////////////////////////
+        //:.  SoA Mod Contents - What Mod Lacks?  .://
+        //////////////////////////////////////////////
+
+  * Sound & Voice, it requires too much work and I will check for a voice actress if mod has good feedback. I even don't know how to setup it up.
+
+  * Custom Quest, actually there is one but it cannot be considered as a quest. Reviving Lena after Bodhi fight is different.
+
+
+
+
+
+        ////////////////////////////
+        //:.  ToB Mod Contents  .://
+        ////////////////////////////
+
+  * ToB part, except detailed interjections. in Watcher's Keep she is talkative, other than that almost silent like others. Lena uses same resources 
+from SoA so everything should be transfered in terms of banters/romance lovetalks etc...
+
+  * Her gear is upgradable, Cespenar can upgrade ...with a condition.
+
+  * She has a familiar/pet in ToB, he can be used as a scout. He is not vital in romance or story though but required for upgrade process.
+
+ 
+
+
+
+        ///////////////////////////////
+        //:.  Lena's Kit: Tempest  .://
+        ///////////////////////////////
+
+TEMPEST: Tempests are mobile and agility based warriors, excel at hit and run tactics. They are highly deadly at close combat, their fast movement also maintains their effectiveness at ranged distances.
+
+Due to focus on their mobility, 2 handed weapons like halberds or sword are not preferred by Tempests. Shields also block free movement, tempests with shields are very rarely seen but still exists.
+
+Tempests can be confused with scouts. Scouts only observe the area, avoiding any kind of detection and enemy resistance. Tempests are opposite, they don't focus on stealth but instead offensive force and quick neutralization abilities.
+
+Advantages:
+  - -2 bonus to speed factor at 1st level, gain -1 additional bonus to speed factor every 6 level
+  - May use Cyclone ability one time per day (starting with 1 use at 1st level), gain additional use per day every 5 level. Cyclone lasts for 1 turn.
+    Free Action, +1 AC, an extra attack, +3 movement rate
+    Tempest becomes winded after Cyclone ends for 5 rounds and cannot use Haste or Cyclone during this duration (-2 AC, -2 movement rate, -2 THAC0).
+    Tempest becomes Tireless at 16th level, does not become winded after Cyclone.
+  - May use Thunderdash ability one time per day at 4th level, gain additional use per day every 4 level. Tempest moves in a flash to target destination more like a teleportation.
+  - Waves of Exhaustion: starting from 11th level, during Cyclone, every enemy within 15ft should save vs Breath or exhausted (-2 AC, -2 THAC0, halved movement speed, -4 penalty to casting speed and attack speed, attack per round reduced by 1). Fatigue lasts for 1 round if away from Tempest. If targets stay close to Tempest, then save vs Breath is required every round.
+  - Clairvoyance: starting from 16th level, during Cyclone, a Tempest can sense invisible creatures. During this duration Tempest becomes immune to blindness and backstab.
+
+Disadvantages:
+  -  penalty to Strength -2
+  -  can only specialize with a ranged weapon
+  -  can not use 2 handed weapons
+  -  can only use up to Studded Leather
+  -  cannot dual class
+
+
+When mod is installed this kit will be installed for all races. Due to some game limitations a few of the above restrictions couldnot be 
+implemented. Just ignore these. Due to a few engine related things (or my incompetence) she can turn into a overpowered tool of destruction 
+if multiclass/dualclass. "Cyclone" stacks with other things but I didnot try to fix it to give a different strategy.
+
+High level abilities "Whirlwind" and "Greater Whirlwind" are REMOVED from Tempest's list.
+ - Breeze of Time: for 3 rounds, timestop effect. Can be selected once.
+
+
+ 
+ 
+        ////////////////////////////////////
+        //:.  Scripting & Modding Info  .://
+        ////////////////////////////////////
+
+Basic NPC mod with simple scripting. Nothing revolutionary for SoA part. I tried something different for ToB but nothing worth mentioning 
+actually, it failed to work unfortunately, I will re-write this but will leave the base script as commented. Re-use what ever you wish you 
+can from this mod if I made up that part. Most of the scripting can be found in public mods already.
+
+I used "EU" tag for all scripting required objects/items/dialogues etc... I have not seen anyone using this tag. If you encounter or you are 
+using EU, send me an email, I will make up another tag.
+
+
+
+
+        ////////////////////////////
+        //:.  Credits & Thanks  .://
+        ////////////////////////////
+
+First of all thanks to Michele Chang "dreadred" for her beautiful Anna portrait. Original link to her drawing at 
+http://deadred-art.blogspot.com/2009/01/annah-fan-artredesign.html
+
+Thanks to Ace from G3 for her NPC guide. Ace's NPC guide gave a good understanding about NPCs and how they operate. Still from time to time 
+I check the guide. I would like to give link but her site is down when I am writing this doc. Sorry Ace...
+
+I copied many things from "Grim Squeaker"s Tryis Flare mod in terms of scripting. Thanks to his mod for giving solid example about how it is 
+done and it should be done. Check out his "Tyris" mod at here: http://www.gibberlings3.net/tyris/
+
+Looked through many things from G3 (www.gibberlings3.net), thanks to the users/mods there.
+
+Copied the structure of a custom kit from "Lava Del'Vortel"s "Yvette" mod. Just scripting... Check out his mod at here: 
+http://www.spellholdstudios.net/ie/coi
+
+Thanks to Wes Weimer for Weidu.
+
+
+
+
+        ///////////////////////////////////
+        //:.  Versions & Known Issues  .://
+        ///////////////////////////////////
+
+  * v0.3:
+ - First tested "can-go-to-public" version
+
+  * v0.4:
+ - Adding new interjections...
+ - Nonworking "critical hit bonus" of Cyclone removed. Single Weapon Style critical hit range bonus does not stack if a spell applies another bonus.
+ - Tempest kit is installable as standalone component
+ - Lovetalk 22 rewritten for a branch, some weird things happened there
+ - Custom Gear now has custom BAMs.
+ - changed her blade to bastard sword, from katana
+ - Added Tempest HLA "Breeze of Time", timestop for 3 rounds
+
+  * v0.4.1:
+ - non used macro file caused problem on installation, removed from setup
+
+  * v0.5:
+ - TOB tested, watchers keep interjections added, some minor additions also
+ - fixed epilogue problem (was not showing)
+
+  * v0.6: 
+ - Lena's strength got an upgrade to 16 from 13
+ - custom weapon speeds were invalid, fixed
+ - translation fixes
+ - lovetalks moved to J file, now NPC banters work fine
+
+  * v0.7:
+ - variable cleanup, many GLOBAL variables are moved to LOCALS
+ - romance variables are reimplemented to cleanup variables
+ - Tempest kit overhaul, redesigned most abilities, added a few offensive abilities and tweaked others to make up -2 Strength penalty
+ - translation fixes
+ - NPC banters had B B25 file mix up for some NPCs, fixed
+ - Lena's armors are added to itemexcl (prevent wear with protection items)
+
+  * v0.8:
+ - EE support, kit gets installed on EE games now
+ - PID talks will now exit dialogue instead of looping over and over
+ - PID talk order is changed a little, still same options
+ - during former versions the item upgrade dialogue trans to Cespenar was lost, it is restored now
+ - portrait improvements for EE games
+ - Bane of Tanar'ri has a lot of changes now, also usable by others although its bonuses will be active with Lena (and other tieflings only)
+
+  * Known Issues:
+ - some lovetalks are interrupted when Lena's action is overriden, as workaround the issue talking to Lena triggers the lovetalk though.
+ - TOB lovetalks does not work as intended, will need rewrite
+ - some of the new Tempest abilities does not make sense on some races (undead etc...) and also some items should provide immunity if
+they also provide immunity to fatigue
+
+  * Working On (probably never-to-be-done), not all but will add some of them, need to think over them first:
+ - High Level Ability: Tornado, deal 10d10 crushing damage and same effect of dragon wingbuffet
+
+
+
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////
+          //////////////////////////////////////////////
+            //////////////////////////////////////////
+              //////////////////////////////////////
+                //////////////////////////////////
+                  //////////////////////////////
+                    //:.  SPOILERS BELOW  .://
+                    //:.  SPOILERS BELOW  .://
+                    //:.  SPOILERS BELOW  .://
+                    //:.  SPOILERS BELOW  .://
+                    //:.  SPOILERS BELOW  .://
+                    //:.  SPOILERS BELOW  .://
+                  //////////////////////////////
+                //////////////////////////////////
+              //////////////////////////////////////
+            //////////////////////////////////////////
+          //////////////////////////////////////////////
+        //////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////
+        //:.  Some Story & Development & Implementation Spoilers  .://
+        //////////////////////////////////////////////////////////////
+
+She is like an outcast but more like a fallen warrior. She cannot go back, she has nowhere to go, she takes <CHARNAME>'s offer because 
+she has nothing to do. Also can be considered desperate. 
+
+She does not believe in Love because of her past, her grow up. The romance might not look like a romance you would get from other mods, 
+it is a bit like forced by <CHARNAME>. 2 reasons: I wanted it that way and I cannot translate stuff for a better romance lovetalks :)
+
+She will be both jealous and look down on <CHARNAME>, later she will accept his/her superiority.
+
+She is a despot, sadist, cruel and bloodthirsty tiefling. She won't attack everyone like a goblin that sees your character though.
+
+She only objects Keldorn because he is a paladin. Do I also need to tell you she won't spawn if <CHARNAME> is a paladin?
+
+She prefers honesty over other things even though this honesty will disturb her in the end.
+
+The tattoo she describes is the same one on Lilith from Borderlands. Description might be a failure on my side.
+
+She knows Bhaalspawn prophecy, I remember it passes in one of the lovetalks or one of the removed lovetalks.
+
+Her mother cursed her when Lena killed her but curse was something like Bhaal's seed. Can consider practically same. How bodhi realizes? 
+Her undead nature sees 2 MATURE souls in Lena's body, she suppresses Lena's and exposes Ulressa's soul by her undead & magic powers. That 
+is my explanation.
+
+With some good defensive gear she can be untouchable and considered overpowered. Consider her low hitpoints and compare her with 
+Korgan/Minsc/Valygar first. Gear might be overpowered at start, I made them "Lena only" for this cause but still her +3 weapon/vampire immune 
+armor might be overpowered. Consider Lilarcor with its immunities and how easy <CHARNAME> gets it. Her armor prevents fixing her most important 
+stat on a fighter, Health, so I think Lena's gear & abilities are balanced.
+
+She is "ambidexterious", she does not have the -2 penalty on offhand THAC0, using dual weapons might be a solid idea (Foebane & 
+Bane of Tanar'ri for example). This requires mastery in two weapon fighting of course.
+
+Her armor is cursed, cannot be removed and prevents both Constitution and health bonuses. I think immunity to level drain effect is balanced with this.
+
+Her weapon is a bit on the high side at start but it is actually a +3 bastard sword with %5 critical hit bonus. There are not many demon encounters in 
+game, especially in SoA. In vanilla there are many +3 weapons sold in stores. Personally I think the mage stronghold quest is the second toughest 
+stronghold quest in game (first is cleric quest). At this point of game, <CHARNAME> will have many +3 weapons at his/her companions I guess.
+
+I suggest to install SCII also. Trying to save her from the initial AoE damage spell is too much fun :)
+
+Her equipment does not look like other same type gear, appearence I mean. This is a matter of preferance, I prefer current view; "Bane of Tanar'ri" 
+as a katana, no armor view for "Skin of Larchen".
+
+Her "Cyclone" ability was not meant to stack with "Haste" or haste effects but couldnot implement it that way, so it stacks now. Game limits 
+attack count with 5 unless improved haste so it should not be a problem if "Cyclone" + "Haste" stacking. Consider Korgan's Enrage (immune to 
+everything) with this.
+
+Tempest "Cyclone" ability HAD bonus to critical hit range but it does not stack with "Single Weapon Style"'s critical hit range bonus. I removed 
+bonus from Cyclone.
+
+Can spawn at level 8/10/12, 18 (TOB), proficiencies start as: ++ bastard sword (9/12/15), ++ single weapon style, + crossbow (18), + flail
+
+
+
+
+        //////////////////////////////////////////////////////////////
+        //:.  SoA Contents in Numbers & Details - SPOILERS AHEAD  .://
+        //////////////////////////////////////////////////////////////
+
+  * Romance depends on a LIKE system, if <CHARNAME> fails to "appeal" to Lena then romance won't go to serious stage. It requires 6+ points at 
+the moment. Save many times, many points comes from obvious answers and a few comes nearly free. Want to earn points? Say "I love you" like things 
+even though she despise or scorn.
+
+  * Don't touch her tail for the sake of the romance... You are warned...
+
+  * Custom Items
+>>>> Armor: Skin of Larchen <<<<
+Larchen'goushael, shortly Larchen, was a Shadow Dragon protecting castle of Vyrlarn and was slain by Lena during one of her missions.  This armor is a piece of his skin as a reward for her mission but within it Larchen is still alive.  
+
+Armor provides magical protection for physical attacks and also protects from life drain attacks.  Besides the physical protections of this armor, it drains the life force of wearer continously.
+
+This red armor is too thin, it can be confused with a clothing.  You have not seen Lena removing this armor.
+
+** CURSED **
+
+STATISTICS:
+
+Equipped Abilities:
+ Negative Plane Protection: the wearer is immune to life drain, ability drain and level drain attacks.
+ Life Drain: the wearer becomes immune to any buff on maximum health due to constant life drain
+
+Armor Class: 3
+Weight: 6
+Requires: 6 Strength
+
+>>>> Weapon: Bane of Tanar'ri <<<<
+Although very old, this blade still holds its powerful enchantment on it.  To your surprise it is way too lighter than an average bastard sword.  Also touching its blade portion might not be a good idea due to its sharpness.
+
+When asked, Lena tells she got this blade from one of her high rank officers during a mission, probably from its corpse.  The enchantments on this blade indicate this weapon is enchanted to be used in the famous Blood War.
+
+STATISTICS:
+
+Combat Abilities (Thieflings only):
+ Demon Bane: additional +3 bonus to THAC0 and +6 damage against all demons
+ Demon Slayer: at a critical hit against a demon, target must save Death with -4 or slain
+
+Combat Abilities:
+ Keen: %5 increased critical hit range
+
+Enchantment: +3
+THAC0: +3 bonus
+Damage: 2D4 + 3
+Damage type: slashing
+Weight: 6
+Speed Factor: 5
+Proficiency Type: Bastard Sword
+Type: 1-handed
+Requires: 11 Strength
+
+  * Romance won't wait for any progress in game (chapter, quest etc...), you can start chapter 3 with romance completed if you play that long.
+
+  * There are 16+8+9 lovetalks written (SoA Non-Serious + SoA Serious + ToB SERIOUS, ToB assumes player have serious romance with her)
+
+  * No Female friendship/romance, no, she is straight, not lezeran :)
+
+  * In romance lovetalks there are many cliches and a few references to other real life sources. Also the "Duel" might seem like rubbish, 
+just bare with it :) fighters will win easily but others might have hard time winning the duel. The battle result does not change the events 
+anyway. I also made a mistake there in terms of D&D rules, ignore it, will fix it later when I think of something better.
+
+  * Banters for all Bioware NPCs (2 times each) and interjections throughout SoA... around 30+ interjections.
+Phaere Innuendo, Salvanas, Gypsy at Trademeet, some demon encountered, Slayer change, Keldorn objections and some more surprises...
+
+  * Manipulates some quests/encounters, this only affects game story in 1 place with a special condition. Other than that no important 
+manipulation... <CHARNAME>'s responses to some quest related NPCs also update the LIKE points. Be ready for some brawls Lena starts out of nowhere...
+
+  * Player initiated flirts and compliments for flirt-like random answers, a few questions <CHARNAME> can ask but nothing special.
+
+  * There will be romance killers in a kind way unlike rude answers in lovetalks. These lines also can give hint about the romance status, just 
+talk to Lena, they are too obvious.
+
+  * Lena's description (the one <CHARNAME> asks to stop) only explain her view from the original portrait, if using another portrait it is meaningless.
+
+  * Can be acquired during Mage Stronghold quest, she will be at the south of demon area where player goes to demon heart hunting. Follow the quest 
+order or she might not spawn.
+
+  * Rest when you feel like she has been silent about lovetalks, one of the lovetalk requires a city, another requires a inn rest, a few occurs 
+at rest only. It can be stated she has talent and skill for many things, heh, who hasn't.
+
+  * Bodhi will do something different to Lena, prepare for a demon battle. If the fight is too hard (no time to buff party unfortunately) lower 
+difficulty, same for Bodhi fight. The big demons will "squeeze" into smaller imps.
+
+  * I think there are many clues about how to revive "dead" Lena. A trip to where you recruited Lena perhaps. A new demon might be the one you are 
+looking for. Go to the planar sphere and put bodhi's heart into machine for another trip to hell. I tested this a few times and never got stucked.
+If you get stuck tell me how you did, I also think of putting a line to the servant golem to kick your butt to throw you out of sphere:)
+
+  * She will object to Keldorn in party, a demon and a paladin in same party was never meaningful to me. She will either leave party or <CHARNAME> 
+will have to refuse Keldorn in a kind way. Don't worry, <CHARNAME> does not have to insult Keldorn, although Lena might like to kill him. 2 reasons 
+behind this: 1. demon vs paladin, 2. I was thinking of some very critical problems in party if they were but I hate the way Edwin vs 
+Keldorn/Minsc/Valygar cause (in the middle of a quest mostly when you need good fighters or a mage) so implemented as it is now.
+
+
+
+
+
+        //////////////////////////////////////////////////////////////
+        //:.  ToB Contents in Numbers & Details - SPOILERS AHEAD  .://
+        //////////////////////////////////////////////////////////////
+
+  * ToB part, except detailed interjections. in Watcher's Keep she is talkative, other than that almost silent like others. Lena uses same resources 
+from SoA so everything should be transfered in terms of banters/romance lovetalks etc...
+
+  * She will be in your party IF she was in your party in final SoA fight. She cannot be summoned at the moment.
+
+  * She is in your party in ToB because she loves you, Lena will assume <CHARNAME> is still in serious relation with her.
+
+  * Her gear is upgradable, Cespenar can upgrade. See below updated descriptions to get what you need to upgrade.
+
+>>>> Upgraded Armor: Skin of Larchen <<<<
+Larchen'goushael, shortly Larchen, was a Shadow Dragon protecting castle of Vyrlarn and was slain by Lena during one of her missions.  This armor is a piece of his skin as a reward for her mission but within it Larchen is still alive.  
+
+Armor provides magical protection for physical attacks and also protects from life drain attacks.  Besides the physical protections of this armor, it drains the life force of wearer continously.
+
+This red armor is too thin, it can be confused with a clothing.  You have not seen Lena removing this armor.
+
+Cespenar upgraded this armor with the Skull of the Lich, actually armor upgraded itself. Cespenar claims the armor drained the power of the skull and all the remaining was sand.
+
+** CURSED **
+
+STATISTICS:
+
+Equipped Abilities:
+ Negative Plane Protection: the wearer is immune to life drain, ability drain and level drain attacks.
+ Life Drain: the wearer becomes immune to any buff on maximum health due to constant life drain
+ Mind Blank: the wearer is immune to charm, confusion and domination effects. Also sleep, maze and command spells have no effect on wearer.
+
+Armor Class: 3
+Weight: 6
+Requires: 6 Strength
+
+>>>> Upgraded Weapon: Bane of Tanar'ri <<<<
+Although very old, this blade still holds its powerful enchantment on it.  To your surprise it is way too lighter than an average bastard sword.  Also touching its blade portion might not be a good idea due to its sharpness.
+
+When asked, Lena tells she got this blade from one of her high rank officers during a mission, probably from its corpse.  The enchantments on this blade indicate this weapon is enchanted to be used in the famous Blood War.
+
+Cespenar upgraded this weapon for Lena using the powerful artifact Baalor Claw.  With the enchantments Cespenar made, the sharpness of this blade surpasses legendary Silver Swords now.
+
+STATISTICS:
+
+Combat Abilities (Thieflings only):
+ Demon Bane: additional +5 bonus to THAC0 and +10 damage against all demons
+ Demon Slayer: at a critical hit against a demon, target must save Death with -4 or slain
+
+Combat Abilities:
+ Keen: %10 increased critical hit range
+ Vorpal: %5 chance of killing an opponent by decapitation with each successfull hit. Save vs Death with -4 negates
+
+Enchantment: +5
+THAC0: +5 bonus
+Damage: 2D4 + 5
+Damage type: slashing
+Weight: 6
+Speed Factor: 3
+Proficiency Type: Bastard Sword
+Type: 1-handed
+Requires: 11 Strength
+
+  * She has a familiar/pet in ToB, he can be used as a scout, same with upgraded familiars.
+Armor Class: 0
+Hit Points: 24
+Magic Resistance: 25%
+Resistances: Has 100% resistance to cold and 60% resistance to slashing, piercing, and missile damage. 
+Spells: It can also cast 'Prismatic Spray' and 'Stoneskin' once per day. 
+Special: Regenerates 1hp/second. 
+Immunities: Immune to level drain, sleep, and petrification.
+Thievery: has ability to set trap, detect illusion and also stealth to help moving around undetected.
+
+  * Fifth & Cespenar talk is required for custom gear upgrade. This should happen faily early, not a real long timer there.
+
+  * Lovetalks of ToB are randomized, each trigger will cause Lena talk about something that is not talked yet in a random way, some events 
+unlock new talks. You don't have to talk all of them but they will happen fairly early. That is the only scripting I did which I did not see 
+in any other mod yet. v0.5 NOTE: THIS IS NOT WORKING, WILL BE RE-WRITTEN
+
+  * Epilogues are implemented, many of them have a bad ending, sorry... Only one ,let's say, good ending which requires 3 conditions to meet.
+
+
+

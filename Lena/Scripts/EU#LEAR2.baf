@@ -1,0 +1,13 @@
+///////////////////////////////////////////////////////
+//:.  Demogorgon Chamber, Sacrifice Region Script  .://
+///////////////////////////////////////////////////////
+
+IF
+    IsOverMe("EU#Lena")
+    !Global("EU#LenaDemogorgonSacrifice","AR2402",1)
+    !StateCheck("EU#Lena",CD_STATE_NOTVALID)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaDemogorgonSacrifice","AR2402",1)
+        DisplayString("EU#LENA",@5136)
+END

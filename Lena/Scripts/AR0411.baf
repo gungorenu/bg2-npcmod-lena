@@ -1,0 +1,40 @@
+/////////////////////////////////
+//:.  convince Lena to stay  .://
+/////////////////////////////////
+
+IF
+	InParty("EU#LENA")
+	!StateCheck("EU#LENA",CD_STATE_NOTVALID)
+	!StateCheck(Player1,CD_STATE_NOTVALID)
+	Global("ToldDemonsHeart","GLOBAL",1)
+	Global("EU#LenaInSphere","AR0411",1)
+THEN
+	RESPONSE #1
+        Wait(3)
+	    SetGlobal("EU#LenaInSphere","AR0411",2)
+		ActionOverride("EU#LENA",StartDialogueNoSet(Player1))
+END
+
+//////////////////////////////////////////////////////
+//:.  Planar Sphere Travel to Slums & Demon Area  .://
+//////////////////////////////////////////////////////
+
+IF
+    Global("EU#LenaTurnedSuccubus","GLOBAL",20)
+    Global("EU#LenaTurnedSuccubusToSlums","GLOBAL",0)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTurnedSuccubusToSlums","GLOBAL",1)
+        TriggerActivation("Tran0400",TRUE)
+        TriggerActivation("Tran0414",FALSE)
+END
+
+IF
+    Global("EU#LenaTurnedSuccubus","GLOBAL",7)
+    Global("EU#LenaTurnedSuccubusToHell","GLOBAL",0)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaTurnedSuccubusToHell","GLOBAL",1)
+        TriggerActivation("Tran0400",FALSE)
+        TriggerActivation("Tran0414",TRUE)
+END

@@ -1,0 +1,16 @@
+/////////////////////////////////
+//:.  convince Lena to stay  .://
+/////////////////////////////////
+
+IF
+	InParty("EU#LENA")
+    Dead("LAVOK02")
+	!StateCheck("EU#LENA",CD_STATE_NOTVALID)
+	!StateCheck(Player1,CD_STATE_NOTVALID)
+	Global("EU#LenaFirstTimeOutSphere","AR0400",0)
+THEN
+	RESPONSE #1
+	    SetGlobal("EU#LenaFirstTimeOutSphere","AR0400",1)
+        Wait(12) // not to prevent lavok talk
+		ActionOverride("EU#LENA",StartDialogueNoSet(Player1))
+END

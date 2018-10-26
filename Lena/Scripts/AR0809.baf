@@ -1,0 +1,12 @@
+////////////////////////////////////////////
+//:.  Final Bodhi Fight, Spawn Ulressa  .://
+////////////////////////////////////////////
+
+IF
+    Global("EU#LenaTurnedSuccubus","GLOBAL",4)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTurnedSuccubus","GLOBAL",5)
+        CreateCreature("EU#LENAV",[1483.467],2)
+        Continue()
+END

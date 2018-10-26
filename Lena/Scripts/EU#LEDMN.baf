@@ -1,0 +1,22 @@
+///////////////////////////////
+//:.  Lena Heart Tanar'ri  .://
+///////////////////////////////
+
+//: make self enemy
+IF
+    See([GOODCUTOFF])
+    Allegiance(Myself,NEUTRAL)
+THEN
+    RESPONSE #1
+        DisplayStringHead(Myself, @4631)
+        Enemy()
+END
+
+//: death, leave body
+IF
+    Die()
+THEN
+    RESPONSE #1
+        DropInventory()
+        DestroySelf()
+END

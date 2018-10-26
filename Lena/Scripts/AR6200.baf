@@ -1,0 +1,117 @@
+//////////////////////////
+//:.  Lena Epilogues  .://
+//////////////////////////
+
+/*
+    6 different Epilogues, add up each point
+      >> assumed to be romantic so no question here, for some reason player breaks romantic, she leaves when game ends, default ending
+      >> become god: 0 , not 1
+      >> come with me, answer NOT revenge: 2, revenge 0
+      >> retire: 0, not 4
+    * points 0,2,4,6 : DEFAULT she leaves because you are so different than before/ she falls on backplan/ no reason to stay and she leaves you
+    * points 1 : stays for some time but bored and leaves, your retirement is reason
+    * points 3 : you go to her world but you don't want to adventure anymore so she continues, you return
+    * points 5 : you still go on from adventure to adventure in this world, NEUTRAL: she leaves in the end, you both go on your own ways neutrally, EVIL: because of bloodthirst and jealousy you slay her
+    * points 7 : you still go on from adventure to adventure in lena's world, you both live together, in the end you oppose her former team and destroy their guild
+
+    Note: game sets "PlayerChoseEssence>1" when player chooses to be god so no need to set +1 to epilogue points
+*/
+
+//: Default Ending, she leaves you
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("EU#LENA")
+    OR(3)
+        !Global("EU#LenaRomanceActive","GLOBAL",2)
+        Alignment(Player1,MASK_GOOD)
+        Global("PlayerChoseEssence","GLOBAL",1) // player is God
+    Global("EU#LenaTOBEpilogue","GLOBAL",0)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTOBEpilogue","GLOBAL",1)
+        TextScreen("EU#LEND1")
+        SmallWait(1)
+        Continue()
+END
+
+//: Player retire, Lena leaves
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("EU#LENA")
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    Global("EU#LenaTOBEpiloguePoints","GLOBAL",0)
+    Global("EU#LenaTOBEpilogue","GLOBAL",0)
+    Global("PlayerChoseEssence","GLOBAL",0) // player is Mortal
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTOBEpilogue","GLOBAL",1)
+        TextScreen("EU#LEND2")
+        SmallWait(1)
+        Continue()
+END
+
+//: Player retire but comes to her world, Lena leaves in the end
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("EU#LENA")
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    Global("EU#LenaTOBEpiloguePoints","GLOBAL",2)
+    Global("EU#LenaTOBEpilogue","GLOBAL",0)
+    Global("PlayerChoseEssence","GLOBAL",0) // player is Mortal
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTOBEpilogue","GLOBAL",1)
+        TextScreen("EU#LEND3")
+        SmallWait(1)
+        Continue()
+END
+
+//: Player travel, NEUTRAL, Lena leaves in the end
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("EU#LENA")
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    Global("EU#LenaTOBEpiloguePoints","GLOBAL",4)
+    Alignment(Player1,MASK_GENEUTRAL)
+    Global("EU#LenaTOBEpilogue","GLOBAL",0)
+    Global("PlayerChoseEssence","GLOBAL",0) // player is Mortal
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTOBEpilogue","GLOBAL",1)
+        TextScreen("EU#LEND4")
+        SmallWait(1)
+        Continue()
+END
+
+//: Player travel, EVIL, player kills Lena
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("EU#LENA")
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    Global("EU#LenaTOBEpiloguePoints","GLOBAL",4)
+    Alignment(Player1,MASK_EVIL)
+    Global("EU#LenaTOBEpilogue","GLOBAL",0)
+    Global("PlayerChoseEssence","GLOBAL",0) // player is Mortal
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTOBEpilogue","GLOBAL",1)
+        TextScreen("EU#LEND5")
+        SmallWait(1)
+        Continue()
+END
+
+//: Player travel, go to her world, raze former guild
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("EU#LENA")
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    Global("EU#LenaTOBEpiloguePoints","GLOBAL",6)
+    Global("EU#LenaTOBEpilogue","GLOBAL",0)
+    Global("PlayerChoseEssence","GLOBAL",0) // player is Mortal
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTOBEpilogue","GLOBAL",1)
+        TextScreen("EU#LEND6")
+        SmallWait(1)
+        Continue()
+END

@@ -1,0 +1,25 @@
+///////////////////////////////////
+//:.  Lena Resurrect Cutscene  .://
+///////////////////////////////////
+
+IF
+    True()
+THEN
+    RESPONSE #1
+        CutSceneId(Player1)
+        DisplayStringHead(Myself, @4632)
+        Wait(10)                                        // text takes 10sec to dissappear
+        MoveGlobalObject("EU#LENA",Player1)             // move Lena next to Player1
+        SetGlobal("EU#LenaTurnedSuccubus","GLOBAL",10)  // Lena is resurrected
+        DisplayStringHead("EU#LENA", @4633 )            // Lena awaken
+        Wait(1)
+        CreateVisualEffectObject("SPSTRENH","EU#LENA")  // show some effect on Lena, released
+        Wait(3)
+        CreateVisualEffectObject("SPDISPMA","EU#LENA")  // show some effect on Lena, released
+        Wait(3)
+        CreateVisualEffectObject("SPPRAYRI","EU#LENA")  // show some effect on Lena, released
+        Wait(3)
+        EraseJournalEntry(@4621)                        // Lena turned normal so remove journal entry
+        ActionOverride("EU#LENA",DialogInterrupt(TRUE)) // lena can talk again
+        EndCutSceneMode()                               // end cutscene
+END

@@ -1,0 +1,24 @@
+////////////////////////////////////////////////////
+//:.  Lena Transformation Bodhi Talk Initiater  .://
+////////////////////////////////////////////////////
+
+//: after cutscene
+IF  
+    Global("EU#LenaTurnedSuccubus","GLOBAL",2)
+    !Global("EU#LenaTurnedSuccubusBodhiTalk","LOCALS",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaTurnedSuccubusBodhiTalk","LOCALS",1)
+        StartDialogueNoSet("EU#LENA")
+END
+
+//: after all talk
+IF
+    !Global("EU#LenaTurnedSuccubusBodhiTele","LOCALS",1)
+    Global("EU#LenaTurnedSuccubus","GLOBAL",4)
+THEN
+    RESPONSE #1
+        SetGlobal("Deactivate0801","AR0800",3)
+        SetGlobal("EU#LenaTurnedSuccubusBodhiTele","LOCALS",1)
+        ForceSpell(Myself,DRYAD_TELEPORT)
+END

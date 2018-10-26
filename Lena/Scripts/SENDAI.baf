@@ -1,0 +1,12 @@
+////////////////////////////////////////////////
+//:.  Sendai Script, Trigger sth when Dead  .://
+////////////////////////////////////////////////
+
+IF
+    Die()
+    !Global("EU#SendaiDead","GLOBAL",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#SendaiDead","GLOBAL",1)
+        Continue()
+END

@@ -1,0 +1,59 @@
+        ///////////////////////////////////////////////////////////////////////////////////
+        //:.  Lena NPC Mod for Baldur's Gate 2: Shadows of Amn (Non-Enhanced Edition)  .://
+        ///////////////////////////////////////////////////////////////////////////////////
+
+Mod is same except the swords "Bane of Tanar'ri". In Vanilla only Lena (or an evil Stalker) can use the weapons.
+Below are the basic and upgraded sword descriptions.
+
+BASIC : Although very old, this blade still holds its powerful enchantment on it.  To your surprise it is way too lighter than an average bastard sword.  Also touching its blade portion might not be a good idea due to its sharpness.
+
+When asked, Lena tells she got this blade from one of her high rank officers during a mission, probably from its corpse.  The enchantments on this blade indicate this weapon is enchanted to be used in the famous Blood War.
+
+STATISTICS:
+
+Combat Abilities:
+ Demon Bane: additional +3 bonus to THAC0 and +6 damage against demons
+ Keen: %5 increased critical hit range
+
+Enchantment: +3
+THAC0: +3 bonus
+Damage: 2D4 + 3
+Damage type: slashing
+Weight: 6
+Speed Factor: 5
+Proficiency Type: Bastard Sword
+Type: 1-handed
+Requires: 11 Strength
+Usable By:
+ Lena only
+
+----------
+
+UPGRADED : Although very old, this blade still holds its powerful enchantment on it.  To your surprise it is way too lighter than an average bastard sword.  Also touching its blade portion might not be a good idea due to its sharpness.
+
+When asked, Lena tells she got this blade from one of her high rank officers during a mission, probably from its corpse.  The enchantments on this blade indicate this weapon is enchanted to be used in the famous Blood War.
+
+Cespenar upgraded this weapon for Lena using the powerful artifact Baalor Claw.  With the enchantments Cespenar made, the sharpness of this blade surpasses legendary Silver Swords now.
+
+STATISTICS:
+
+Combat Abilities:
+ Demon Bane: additional +5 bonus to THAC0 and +10 damage against demons
+ Keen: %10 increased critical hit range
+ Vorpal: %5 chance of killing an opponent by decapitation with each successfull hit. Save vs Death with -4 negates
+
+Enchantment: +5
+THAC0: +5 bonus
+Damage: 2D4 + 5
+Damage type: slashing
+Weight: 6
+Speed Factor: 3
+Proficiency Type: Bastard Sword
+Type: 1-handed
+Requires: 11 Strength
+Usable By:
+ Lena only
+
+
+
+

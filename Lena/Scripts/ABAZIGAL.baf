@@ -1,0 +1,12 @@
+///////////////////////////////////////////////////
+//:.  Abazigal Script, Trigger sth when Dead  .://
+///////////////////////////////////////////////////
+
+IF
+    Die()
+    !Global("EU#AbazigalDead","GLOBAL",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#AbazigalDead","GLOBAL",1)
+        Continue()
+END

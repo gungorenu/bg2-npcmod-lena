@@ -1,0 +1,34 @@
+/////////////////////////////////////
+//:.  Ulressa & Bodhi Tele Away  .://
+/////////////////////////////////////
+
+IF
+    True()
+THEN
+    RESPONSE #1
+        CutSceneId("EU#LENA")
+		SetLeavePartyDialogFile()
+		DialogInterrupt(FALSE)
+        CreateVisualEffectObject("SPDIMNDR",Myself)
+        Wait(2)
+		LeaveParty()
+        MoveGlobal("AR0083","EU#LENA",[626.543]) // candlekeep dream scene
+        SetGlobal("EU#LenaTurnedSuccubus","GLOBAL",4)
+        EndCutSceneMode()
+END
+
+IF
+    True()
+THEN
+    RESPONSE #1
+        CutSceneId("BODHIAMB")
+        SetGlobal("Deactivate0801","AR0800",3)
+        CreateVisualEffectObject("SPDIMNDR",Myself)
+        Wait(2)
+        ForceSpell(Myself,DRYAD_TELEPORT)
+        EndCutSceneMode()
+
+        CreateCreatureObject("VAMPIM01",Myself,0,0,0)
+        CreateCreatureObject("TELQUA1",Myself,0,0,0)
+        CreateCreatureObject("TELQUA1",Myself,0,0,0)
+END

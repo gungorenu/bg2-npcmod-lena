@@ -1,0 +1,12 @@
+///////////////////////////////////////////////////
+//:.  Balthazar Script, Trigger sth when Dead  .://
+///////////////////////////////////////////////////
+
+IF
+    Die()
+    !Global("EU#BalthazarDead","GLOBAL",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#BalthazarDead","GLOBAL",1)
+        Continue()
+END

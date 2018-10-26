@@ -1,0 +1,815 @@
+/////////////////////
+//:.  Variables  .://
+/////////////////////
+
+IF
+    Global("EU#LenaVariables","GLOBAL",0)
+THEN 
+    RESPONSE #100
+        SetGlobal("EU#LenaVariables","GLOBAL",1)
+
+        SetGlobal("EU#LenaInitializeRomance","LOCALS",0)    // settings this to 1 will force interact with player, only initializes if romance is 1/2
+        SetGlobal("EU#LenaRomanceActive","GLOBAL",4)        // romance status, 0: no start, need update, 1: active non-serious, 2: active serious, 3: rejected/can be reactivated sometime??, 4: no match (female/stat/alignment condition etc...), will be activated by PLAYER script, default: NO MATCH
+        SetGlobal("EU#LenaReputationHigh","LOCALS",0)       // reputation controller, setting to 1 will trigger reputation flag which is triggered when Rep>=18
+        SetGlobal("EU#LenaStay","LOCALS",0)                 // Lena stay forever flag, not used that much
+        SetGlobal("EU#LenaLike","LOCALS",0)                 // Lena like counter
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",-1)        // variable that means 1h time passed in romance
+        SetGlobal("EU#LenaXperience","LOCALS",0)            // Lena's experience when join party
+        Continue()
+END
+
+// Match: NOT GOOD alignment, no race, 11+ Int, 13+ Chr restriction
+IF
+    Global("EU#LenaVariables","GLOBAL",1) // global variables activated
+    Gender(Player1,MALE)
+    CheckStatGT(Player1,12,CHR)
+    CheckStatGT(Player1,10,INT)
+    OR(6) // only evil or neutral
+        Alignment(Player1, LAWFUL_EVIL)
+        Alignment(Player1, NEUTRAL_EVIL)
+        Alignment(Player1, CHAOTIC_EVIL)
+        Alignment(Player1, LAWFUL_NEUTRAL)
+        Alignment(Player1, NEUTRAL)
+        Alignment(Player1, CHAOTIC_NEUTRAL)
+THEN
+RESPONSE #100
+    SetGlobal("EU#LenaVariables","GLOBAL",2)
+    SetGlobal("EU#LenaRomanceActive","GLOBAL",3) // romance match but not started yet, start as 3, if stay at 4 then never start romance
+    Continue()
+END
+
+// these are required for drow city fights
+IF
+    Name("EU#Lena",Player1)
+    !Global("EU#LenaPartySlot","GLOBAL",1)
+THEN    
+    RESPONSE #100
+        SetGlobal("EU#LenaPartySlot","GLOBAL",1)
+END
+IF
+    Name("EU#Lena",Player2)
+    !Global("EU#LenaPartySlot","GLOBAL",2)
+THEN    
+    RESPONSE #100
+        SetGlobal("EU#LenaPartySlot","GLOBAL",2)
+END
+IF
+    Name("EU#Lena",Player3)
+    !Global("EU#LenaPartySlot","GLOBAL",3)
+THEN    
+    RESPONSE #100
+        SetGlobal("EU#LenaPartySlot","GLOBAL",3)
+END
+IF
+    Name("EU#Lena",Player4)
+    !Global("EU#LenaPartySlot","GLOBAL",4)
+THEN    
+    RESPONSE #100
+        SetGlobal("EU#LenaPartySlot","GLOBAL",4)
+END
+IF
+    Name("EU#Lena",Player5)
+    !Global("EU#LenaPartySlot","GLOBAL",5)
+THEN    
+    RESPONSE #100
+        SetGlobal("EU#LenaPartySlot","GLOBAL",5)
+END
+IF
+    Name("EU#Lena",Player6)
+    !Global("EU#LenaPartySlot","GLOBAL",6)
+THEN    
+    RESPONSE #100
+        SetGlobal("EU#LenaPartySlot","GLOBAL",6)
+END
+
+// set close to PLAYER1 XP
+IF
+    Global("EU#LenaJoined","GLOBAL",1)
+    Global("EU#LenaXperience","LOCALS",0)
+    XPLT(Player1,500000)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaXperience","LOCALS",1)
+        // no xp, already same level
+END
+IF
+    Global("EU#LenaJoined","GLOBAL",1)
+    Global("EU#LenaXperience","LOCALS",0)
+    XPGT(Player1,499999)
+    XPLT(Player1,750001)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaXperience","LOCALS",1)
+        AddXPObject("EU#LENA", 250000)
+END
+IF
+    Global("EU#LenaJoined","GLOBAL",1)
+    Global("EU#LenaXperience","LOCALS",0)
+    XPGT(Player1,749999)
+    XPLT(Player1,1000001)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaXperience","LOCALS",1)
+        AddXPObject("EU#LENA", 500000)
+END
+IF
+    Global("EU#LenaJoined","GLOBAL",1)
+    Global("EU#LenaXperience","LOCALS",0)
+    XPGT(Player1,999999)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaXperience","LOCALS",1)
+        AddXPObject("EU#LENA", 750000)
+END
+
+//////////////////////////
+//:.  Area Variables  .://
+//////////////////////////
+
+IF
+    AreaCheck("AR0411")
+    InPartyAllowDead("EU#LENA")
+    Global("EU#LenaInSphere","AR0411",0)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaInSphere","AR0411",1)
+END
+
+///////////////////////////
+//:.  Is Lena Hostile  .://
+///////////////////////////
+
+//: if ever becomes enemy activate the innate ability
+IF
+    Allegiance(Myself,ENEMY)
+    !Global("EU#LenaIsEnemy","LOCALS",1)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaIsEnemy","LOCALS",1)
+        ReallyForceSpellDeadRES("EU#TSTE",Myself)
+END
+
+///////////////////////////////////////////////////
+//:.  Lena has spoken, in case we replace CRE  .://
+///////////////////////////////////////////////////
+//REF: TYRIS ROMANCE
+
+IF
+    NumTimesTalkedToGT(0)
+    !Global("EU#LenaSpokenOnce","GLOBAL",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaSpokenOnce","GLOBAL",1)
+END
+
+///////////////////////////////////////////////
+//:.  Lena Joined, in case we replace CRE  .://
+///////////////////////////////////////////////
+//REF: TYRIS ROMANCE
+
+IF
+    InParty(Myself)
+    !Global("EU#LenaJoined","GLOBAL",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaJoined","GLOBAL",1)
+END
+
+//////////////////////////////////////////////////////
+//:.  Lena Romantic, Vanilla NPC Romance Killers  .://
+//////////////////////////////////////////////////////
+
+//: Aerie
+IF
+    InParty(Myself)
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    OR(2)
+        Global("AerieRomanceActive","GLOBAL",1)
+        Global("AerieRomanceActive","GLOBAL",2)
+THEN
+    RESPONSE #1
+        SetGlobal("AerieRomanceActive","GLOBAL",3)
+END
+
+//: Jaheira
+IF
+    InParty(Myself)
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    OR(2)
+        Global("JaheiraRomanceActive","GLOBAL",1)
+        Global("JaheiraRomanceActive","GLOBAL",2)
+THEN
+    RESPONSE #1
+        SetGlobal("JaheiraRomanceActive","GLOBAL",3)
+END
+
+//: Viconia
+IF
+    InParty(Myself)
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    OR(2)
+        Global("ViconiaRomanceActive","GLOBAL",1)
+        Global("ViconiaRomanceActive","GLOBAL",2)
+THEN
+    RESPONSE #1
+        SetGlobal("ViconiaRomanceActive","GLOBAL",3)
+END
+
+/////////////////////////////////
+//:.  Global Leave Function  .://
+/////////////////////////////////
+
+//: in party leave
+IF 
+    Global("EU#LenaOnLeave","LOCALS",1)
+    InParty("EU#LENA")
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaOnLeave","LOCALS",2)
+
+        //: romance
+        SetGlobal("EU#LenaRomanceActive","GLOBAL",3)
+
+        //: remove special items
+        TakePartyItem("EU#G001")
+        TakePartyItem("EU#G002")
+        TakePartyItem("EU#G003")
+        TakePartyItem("EU#G004")
+        TakePartyItem("EU#G005")
+        DestroyItem("EU#G001")
+        DestroyItem("EU#G002")
+        DestroyItem("EU#G003")
+        DestroyItem("EU#G004")
+        DestroyItem("EU#G005")
+
+        //: leave and escape
+        LeaveParty()
+        EscapeArea()
+
+        Continue()
+END
+
+//: removed from party leave
+IF 
+    Global("EU#LenaOnLeave","LOCALS",1)
+    !InParty("EU#LENA")
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaOnLeave","LOCALS",2)
+
+        //: romance
+        SetGlobal("EU#LenaRomanceActive","GLOBAL",3)
+
+        //: remove special items
+        TakePartyItem("EU#G001")
+        TakePartyItem("EU#G002")
+        TakePartyItem("EU#G003")
+        TakePartyItem("EU#G004")
+        TakePartyItem("EU#G005")
+        DestroyItem("EU#G001")
+        DestroyItem("EU#G002")
+        DestroyItem("EU#G003")
+        DestroyItem("EU#G004")
+        DestroyItem("EU#G005")
+
+        //: leave and escape
+        EscapeArea()
+
+        Continue()
+END
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//:.  Lena appearance is "human" but removing armor makes "elf", solve by polymorph  .://
+/////////////////////////////////////////////////////////////////////////////////////////
+
+IF
+    InParty("EU#LENA")
+    OR(2)
+        HasItemEquiped("EU#G003","EU#LENA")
+        HasItemEquiped("EU#G004","EU#LENA")
+    Global("Eu#LenaAnimation","LOCALS",0)
+THEN
+    RESPONSE #1
+        ChangeAnimation("EU#LENA")
+        SetGlobal("Eu#LenaAnimation","LOCALS",1)
+END
+
+//////////////////////////////////////////
+//:.  force speak at initial meeting  .://
+//////////////////////////////////////////
+IF
+    !Global("EU#LenaSpokenOnce","GLOBAL",1)
+    See([PC])
+THEN
+    RESPONSE #1
+        StartDialogueNoSet(LastSeenBy())
+END
+
+//-------- Lovetalk Triggers & Function Globals ---------------------------------------------------------------------------------------------------------------
+
+//: force start lena romance, for debug or speeding purposes
+IF
+    Global("EU#LenaRomanceForceStart","GLOBAL",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceForceStart","GLOBAL",0)
+        SetGlobal("EU#LenaStay","LOCALS",1)
+        SetGlobal("EU#LenaInitializeRomance","LOCALS",1)
+        Continue()
+END
+
+//: basic romance starter function
+IF
+    Global("EU#LenaInitializeRomance","LOCALS",1)           // romance starter, first time only
+    !Global("EU#LenaRomanceActive","GLOBAL",4)              // 4 means no match, wont start
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceActive","GLOBAL",1)        // romance active non-serious
+        SetGlobal("EU#LenaInitializeRomance","LOCALS",0)    // reset trigger
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",0)         // reset this value to 0 so that timer can set it
+        SetGlobal("EU#LenaLoveTalk","LOCALS",1)             // set to first lovetalk
+        RealSetGlobalTimer("EU#LenaRomance","GLOBAL",3600)  // set romance timer, 1h
+        Continue()
+END
+
+//: lovetalk increment global, set this to trigger lovetalk, no need to wait 1h
+IF
+    Global("EU#LenaIncrementRomance","LOCALS",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaIncrementRomance","LOCALS",0)
+
+        IncrementGlobal("EU#LenaLoveTalk","LOCALS",1)       // increment lovetalk
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",0)         // reset timer variable, this will trigger lovetalk
+
+        RealSetGlobalTimer("EU#LenaRomance","GLOBAL",3600)  // reset timer
+        Continue()
+END
+
+//: lovetalk kill romance
+IF
+    Global("EU#LenaKillRomance","LOCALS",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaKillRomance","LOCALS",0)
+
+        SetGlobal("EU#LenaRomanceActive","GLOBAL",3)        // romance stopped
+        IncrementGlobal("EU#LenaLike","LOCALS",-3)          // she dislikes
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",-1)         // set to 2 so even the timer active lovetalks wont incement
+        Continue()
+END
+
+//: lovetalk timer expired, NOT DEBUG
+IF
+    RealGlobalTimerExpired("EU#LenaRomance","GLOBAL")
+    Global("EU#LenaRomanceTimer","LOCALS",0)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",1)
+        Continue()
+END
+
+/////////////////////////////////
+//:.  only morning lovetalk  .://
+/////////////////////////////////
+IF
+    InParty(Myself)
+    PartyRested()
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    Global("EU#LenaLoveTalk","LOCALS",33) // Keep This Secret
+    !See([ENEMY])
+    CombatCounter(0)
+THEN
+    RESPONSE #1
+        IncrementGlobal("EU#LenaLoveTalk","LOCALS",1)
+        Dialogue(Player1)
+END 
+
+/////////////////////////////
+//:.  general lovetalks  .://
+/////////////////////////////
+IF
+    InParty(Myself)
+    //: replaced RealGlobalTimerExpired("EU#LenaRomance","GLOBAL")
+    Global("EU#LenaRomanceTimer","LOCALS",1)
+    OR(2)
+        Global("EU#LenaRomanceActive","GLOBAL",1)
+        Global("EU#LenaRomanceActive","GLOBAL",2)
+    !AreaType(DUNGEON)
+    See(Player1)
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !See([ENEMY])
+    !Range([NEUTRAL],10)
+    CombatCounter(0)
+    OR(16)
+        Global("EU#LenaLoveTalk","LOCALS",1) // Fate & Prophecy
+        Global("EU#LenaLoveTalk","LOCALS",3) // Good Leader & Past
+        Global("EU#LenaLoveTalk","LOCALS",7) // Imoen real sister
+        Global("EU#LenaLoveTalk","LOCALS",9) // Want to be God
+        Global("EU#LenaLoveTalk","LOCALS",11) // Profession
+        Global("EU#LenaLoveTalk","LOCALS",15) // Armor
+        Global("EU#LenaLoveTalk","LOCALS",17) // Rock/Scissors/Paper
+        Global("EU#LenaLoveTalk","LOCALS",19) // Tattoo
+        Global("EU#LenaLoveTalk","LOCALS",25) // Why Scorn
+        Global("EU#LenaLoveTalk","LOCALS",27) // The Duel
+        Global("EU#LenaLoveTalk","LOCALS",35) // The Gift
+        Global("EU#LenaLoveTalk","LOCALS",37) // Shave That Beard
+        Global("EU#LenaLoveTalk","LOCALS",39) // Wings, Not Tail
+        Global("EU#LenaLoveTalk","LOCALS",41) // Want a Pet
+        Global("EU#LenaLoveTalk","LOCALS",43) // Break Up
+        Global("EU#LenaLoveTalk","LOCALS",47) // Leave Me Behind
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",2) //: to 2, increment/kill will handle this
+        IncrementGlobal("EU#LenaLoveTalk","LOCALS",1)
+        Dialogue(Player1)
+END
+
+/////////////////////////////////////////////
+//:.  outdoor talk, friendship actually  .://
+/////////////////////////////////////////////
+IF
+    InParty(Myself)
+    //: replaced RealGlobalTimerExpired("EU#LenaRomance","GLOBAL")
+    Global("EU#LenaRomanceTimer","LOCALS",1)
+    OR(2)
+        Global("EU#LenaRomanceActive","GLOBAL",1)
+        Global("EU#LenaRomanceActive","GLOBAL",2)
+    AreaType(OUTDOOR)
+    See(Player1)
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !See([ENEMY])
+    !Range([NEUTRAL],10)
+    CombatCounter(0)
+    Global("EU#LenaLoveTalk","LOCALS",13) // Sun & Weather
+    OR(2)
+        TimeLT(DUSK_START)
+        TimeGT(DAWN_START)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",2) //: to 2, increment/kill will handle this
+        IncrementGlobal("EU#LenaLoveTalk","LOCALS",1)
+        Dialogue(Player1)
+END
+
+///////////////////////////////////////////////
+//:.  city love talk, friendship actually  .://
+///////////////////////////////////////////////
+IF
+    InParty(Myself)
+    //: replaced RealGlobalTimerExpired("EU#LenaRomance","GLOBAL")
+    Global("EU#LenaRomanceTimer","LOCALS",1)
+    OR(2)
+        Global("EU#LenaRomanceActive","GLOBAL",1)
+        Global("EU#LenaRomanceActive","GLOBAL",2)
+    AreaType(CITY)
+    See(Player1)
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !See([ENEMY])
+    !Range([NEUTRAL],10)
+    CombatCounter(0)
+    Global("EU#LenaLoveTalk","LOCALS",5) // Empty Lives
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",2) //: to 2, increment/kill will handle this
+        IncrementGlobal("EU#LenaLoveTalk","LOCALS",1)
+        Dialogue(Player1)
+END
+
+/////////////////////////////
+//:.  inn rest lovetalk  .://
+/////////////////////////////
+
+IF
+    InParty(Myself)
+    //: replaced RealGlobalTimerExpired("EU#LenaRomance","GLOBAL")
+    Global("EU#LenaRomanceTimer","LOCALS",1)
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+    !AreaType(DUNGEON)
+    Global("EU#LenaRestedInInn","GLOBAL",1)
+    OR(12)
+        AreaCheck("AR0021") // crooked crane, city gates, lvl1, not likely to happen because Lena refuses to stay
+        AreaCheck("AR0406") // copper coronet, lvl2
+        AreaCheck("AR0704") // mithrest, waukens prom, lvl4
+        AreaCheck("AR0709") // den of seven vales, lvl3
+        AreaCheck("AR0313") // sea bounty tavern, lvl4
+        AreaCheck("AR0509") // five flagons, lvl4
+        AreaCheck("AR0513") // delosar, bridge, lvl4
+        AreaCheck("AR1602") // vulgar monkey, lvl2
+        AreaCheck("AR1105") // umar inn, lvl3
+        AreaCheck("AR2010") // vyatri pub, trademeet, lvl3
+        AreaCheck("AR5003") // saradush tavern, lvl3
+        AreaCheck("AR5501") // amkethran inn, lvl3
+    See(Player1)
+    !StateCheck("EU#Lena",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !See([ENEMY])
+    CombatCounter(0)
+    Global("EU#LenaLoveTalk","LOCALS",45) // Get Drunk At Inn
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaRomanceTimer","LOCALS",2) //: to 2, increment/kill will handle this
+        IncrementGlobal("EU#LenaLoveTalk","LOCALS",1)
+        Dialogue(Player1)
+END
+
+////////////////////////////////////////////
+//:.  Phaere innuendo Talk Initializer  .://
+////////////////////////////////////////////
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Global("PhaereInnuendo","GLOBAL",3) // avoided
+    !Range("Phaere",6)
+    Gender(Player1, MALE)
+    Global("EU#LenaSexWithPhaereTalk","LOCALS",0)
+    OR(2)
+        Global("EU#LenaRomanceActive","GLOBAL",1)
+        Global("EU#LenaRomanceActive","GLOBAL",2)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaSexWithPhaereTalk","LOCALS",1)
+        SetGlobal("EU#LenaSexWithPhaereForgive","LOCALS",1)
+        StartDialogueNoSet(Player1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Global("PhaereInnuendo","GLOBAL",2) // slept
+    !Range("Phaere",6)
+    Gender(Player1, MALE)
+    Global("EU#LenaSexWithPhaereTalk","LOCALS",0)
+    Global("EU#LenaRomanceActive","GLOBAL",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaSexWithPhaereTalk","LOCALS",1)
+        SetGlobal("EU#LenaSexWithPhaereForgive","LOCALS",1)
+        StartDialogueNoSet(Player1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Global("PhaereInnuendo","GLOBAL",2) // slept
+    !Range("Phaere",6)
+    Gender(Player1, MALE)
+    Global("EU#LenaSexWithPhaereTalk","LOCALS",0)
+    Global("EU#LenaRomanceActive","GLOBAL",2)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaSexWithPhaereTalk","LOCALS",1)
+        SetGlobal("EU#LenaSexWithPhaereForgive","LOCALS",0)
+        StartDialogueNoSet(Player1)
+END
+
+//////////////////////////////////////////
+//:.  Lena learns Imoen a bhaalspawn  .://
+//////////////////////////////////////////
+
+//: 2 way, 1. in the bodhi hunt area after player lose to irenicus
+IF  
+    InParty(Myself)
+    AreaCheck("AR1512")
+    Global("EU#LenaKnowsImoenBhaalspawn","LOCALS",0)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaKnowsImoenBhaalspawn","LOCALS",1)
+END
+
+//: 2 way, 2. Imoen is in party
+IF  
+    InParty(Myself)
+    InParty("Imoen2")
+    Global("EU#LenaKnowsImoenBhaalspawn","LOCALS",0)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaKnowsImoenBhaalspawn","LOCALS",1)
+END
+
+///////////////////////////////////////////////////////////////
+//:.  Keldorn Conflict, Lena wake up and Keldorn in party  .://
+///////////////////////////////////////////////////////////////
+
+IF
+	InParty("EU#LENA")
+    InParty("Keldorn")
+	!StateCheck("EU#LENA",CD_STATE_NOTVALID)
+	!StateCheck(Player1,CD_STATE_NOTVALID)
+THEN
+	RESPONSE #1
+        StartDialogueNoSet(Player1)
+END
+
+/////////////////////////////////////////////////
+//:.  Reputation Check and Dialogue Starter  .://
+/////////////////////////////////////////////////
+
+IF
+    Global("EU#LenaReputationHigh","LOCALS",0)
+    ReputationGT(Player1,17)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaReputationHigh","LOCALS",1)
+        Continue()
+END
+
+IF
+	InParty("EU#LENA")
+	!StateCheck("EU#LENA",CD_STATE_NOTVALID)
+	!StateCheck(Player1,CD_STATE_NOTVALID)
+    Global("EU#LenaReputationHigh","LOCALS",1)
+THEN
+	RESPONSE #1
+        StartDialogueNoSet(Player1)
+END
+
+////////////////////////////////////
+//:.  Sir Ryan Trawl Interject  .://
+////////////////////////////////////
+
+//: force sir Ryan Trawl to talk to Lena if seen
+IF
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    Global("EU#LenaInOrderOfRadiantHeart","LOCALS",0)
+    See("KAYL2")
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaInOrderOfRadiantHeart","LOCALS",1)
+        ActionOverride("KAYL2",StartDialogueNoSet(Player1))
+END
+
+///////////////////////////////////
+//:.  Sacrificing Elf Warrior  .://
+///////////////////////////////////
+
+IF 
+    Dead("sumoon")
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Global("EU#LenaWitnessElfSacrifice","LOCALS",0)
+THEN
+    RESPONSE #1    
+        SetGlobal("EU#LenaWitnessElfSacrifice","LOCALS",1)
+        Wait(2)
+        DisplayStringHead(Myself, @5061)
+END
+
+//////////////////////////////
+//:.  Orcish Cookbook :)  .://
+//////////////////////////////
+
+IF
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Global("EU#LenaFoundOrcCookbook","LOCALS",0)
+    PartyHasItem("BOOK93")
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaFoundOrcCookbook","LOCALS",1)
+        Wait(2)
+        DisplayStringHead(Myself, @5086)
+        TakePartyItem("BOOK93")
+        DestroyItem("BOOK93")
+END
+
+////////////////////////////////////////////////////////////////
+//:.  Non Joinable NPC Interjections, Head String Displays  .://
+////////////////////////////////////////////////////////////////
+
+//: Copper Coronet fighting pits
+IF
+    Dead("Gladiator")
+    !Global("EU#LenaCCGladiatorDead","LOCALS",1)
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaCCGladiatorDead","LOCALS",1)
+        Wait(2)
+        DisplayStringHead(Myself, @5094)
+END
+
+//: Tanner Shop second floor
+IF
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    AreaCheck("AR0502")    
+    Global("EU#LenaInTanner","LOCALS",0)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaInTanner","LOCALS",1)
+        StartDialogueNoSet(Player1)
+END
+
+//: Marcus dead
+IF
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Global("EU#LenaKilledMarcus","AR0313",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaKilledMarcus","AR0313",2)
+        Wait(2)
+        DisplayStringHead(Myself, @5101)
+END
+IF
+    StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Global("EU#LenaKilledMarcus","AR0313",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaKilledMarcus","AR0313",2)
+END
+
+//: Windspear Paladins dead
+IF
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Global("EU#LenaKilledWSPaladins","AR1200",1)
+    Dead("PALKNI01")
+    Dead("PALKNI02")
+    Dead("PALKNI03")
+    Dead("PALKNI04")
+    Dead("PALKNI05")
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaKilledWSPaladins","AR1200",2)
+        Wait(1)
+        DisplayStringHead(Myself, @5111)
+END
+IF
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    Global("EU#LenaKilledWSPaladins","AR1200",1)
+    Dead("PALKNI01")
+    Dead("PALKNI02")
+    Dead("PALKNI03")
+    Dead("PALKNI04")
+    Dead("PALKNI05")
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaKilledWSPaladins","AR1200",2)
+END
+
+//: Galvena fest hall
+IF
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    AreaCheck("AR1608")
+    Global("EU#LenaNewCourtesanInGalvena","LOCALS",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaNewCourtesanInGalvena","LOCALS",2)
+        StartDialogueNoSet(Player1)
+END
+
+///////////////////////////////////////////
+//:.  Watcher's Keep Initial Reaction  .://
+///////////////////////////////////////////
+
+IF
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    AreaCheck("AR3001")
+    GlobalLT("EU#LenaInWatchersKeep","LOCALS",1)
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaInWatchersKeep","LOCALS",1)
+        StartDialogueNoSet(Player1)
+END
+
+///////////////////////////
+//:.  Demogorgon Dead  .://
+///////////////////////////
+IF
+    InParty("EU#LENA")
+    !StateCheck("EU#LENA",CD_STATE_NOTVALID)
+    !Global("EU#LenaKilledDemogorgon","LOCALS",1)
+    Global("DemoGorgonIsDead","GLOBAL",1)
+    AreaCheck("AR3020")
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaKilledDemogorgon","LOCALS",1)
+        Wait(3)
+        DisplayStringHead(Myself, @5549)
+END
+IF
+    !StateCheck("EU#LENA",2146426896)
+    !Global("EU#LenaKilledDemogorgon","LOCALS",1)
+    Global("DemoGorgonIsDead","GLOBAL",1)
+    AreaCheck("AR3020")
+THEN
+    RESPONSE #1
+        SetGlobal("EU#LenaKilledDemogorgon","LOCALS",1)
+END

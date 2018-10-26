@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////
+//:.  Demogorgon Chamber, Statue Region Script  .://
+////////////////////////////////////////////////////
+
+IF
+    IsOverMe("EU#Lena")
+    !Global("EU#LenaDemogorgonStatue","AR2402",1)
+    !StateCheck("EU#Lena",CD_STATE_NOTVALID)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaDemogorgonStatue","AR2402",1)
+        DisplayString("EU#LENA",@5135)
+END

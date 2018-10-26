@@ -1,0 +1,30 @@
+//////////////////////////////////////////////////////////
+//:.  Cespenar gives new item to Lena after crafting  .://
+//////////////////////////////////////////////////////////
+
+//: upgraded armor
+IF
+    Global("ItemMaker","GLOBAL",73241) // writing LENA in numbers 7324
+    Global("ImpForgeStuff","GLOBAL",1)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaArmorUpgrade","GLOBAL",1) //: upgrade once
+        SetGlobal("ImpForgeStuff","GLOBAL",0)
+        GiveItemCreate("EU#G004","EU#LENA",0,0,0) //: give armor to Lena, not player
+        StartDialogNoSet(Player1)
+END
+
+//--
+
+//: upgraded weapon
+IF
+    Global("ItemMaker","GLOBAL",73242) // writing LENA in numbers 7324
+    Global("ImpForgeStuff","GLOBAL",1)
+THEN
+    RESPONSE #100
+        SetGlobal("EU#LenaWeaponUpgrade","GLOBAL",1) //: upgrade once
+        SetGlobal("ImpForgeStuff","GLOBAL",0)
+        GiveItemCreate("EU#G002","EU#LENA",0,0,0) //: give weapon to Lena, not player
+        StartDialogNoSet(Player1)
+END
+
