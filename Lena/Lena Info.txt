@@ -244,6 +244,10 @@ Thanks to Wes Weimer for Weidu.
  - portrait improvements for EE games
  - Bane of Tanar'ri has a lot of changes now, also usable by others although its bonuses will be active with Lena (and other tieflings only)
 
+  * v0.8.1:
+ - EET support improved (thanks to Endarire@gibberlings3)
+
+
   * Known Issues:
  - some lovetalks are interrupted when Lena's action is overriden, as workaround the issue talking to Lena triggers the lovetalk though.
  - TOB lovetalks does not work as intended, will need rewrite

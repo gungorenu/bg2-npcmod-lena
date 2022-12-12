@@ -4,7 +4,7 @@
 
 BACKUP ~Lena/backup~
 AUTHOR ~eugene, 'gungorenu@gmail.com'~
-VERSION ~v0.8~
+VERSION ~v0.8.1~
 
 //: lets put a language
 LANGUAGE ~English~
@@ -363,7 +363,7 @@ ACTION_IF FILE_EXISTS_IN_GAME ~mel01.cre~ THEN BEGIN
         SAY NAME2 @60
     COPY ~Lena\Items\eu#g008.itm~ ~override~ // valen armor that will look good on him:)
 
-    ACTION_IF GAME_IS BG2EE THEN BEGIN
+    ACTION_IF GAME_IS ~BG2EE eet~ THEN BEGIN
         COPY ~Lena\Portraits\eu#leVLM.bmp~ ~override~ // valen portrait M
         COPY ~Lena\Portraits\eu#leVLS_EE.bmp~ ~override\eu#leVLS.bmp~ // valen portrait S
     END ELSE BEGIN
