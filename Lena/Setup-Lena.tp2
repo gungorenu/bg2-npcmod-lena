@@ -11,6 +11,10 @@ LANGUAGE ~English~
          ~english~
          ~Lena/Tra/eng.tra~
 
+LANGUAGE ~Schinese~
+         ~schinese~
+         ~Lena/Tra/schinese.tra~
+
 //: Abyssal language translator: http://www.tilansia.com/langconvert.php
 //: See TRA file for translation (it will be next item)
 
